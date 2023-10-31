@@ -20,7 +20,7 @@ Uploadrouter.post("/", upload.single("file"), async (req, res) => {
 
       const blob = storage.file(fileName);
       const blobStream = blob.createWriteStream({
-        resumable: true,
+        resumable: false,
         metadata: {
           contentType: file.mimetype,
         },
@@ -42,6 +42,7 @@ Uploadrouter.post("/", upload.single("file"), async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({ message: error.message });
+    console.log(error);
   }
 });
 

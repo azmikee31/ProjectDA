@@ -2,11 +2,12 @@ import Axios from "./Axios";
 
 // register new user API call
 const registerService = async (user) => {
-  const { data } = await Axios.post("/users", user);
-  if (data) {
-    localStorage.setItem("userInfo", JSON.stringify(data));
+  try {
+    const { data } = await Axios.post("/users", user);
+    return data;
+  } catch (error) {
+    throw new error();
   }
-  return data;
 };
 
 // log out user Function
@@ -24,4 +25,17 @@ const loginService = async (user) => {
   return data;
 };
 
-export { registerService, logoutService, loginService };
+// update profile call API
+const updateProfileService = async (user, token) => {
+  const { data } = await Axios.put("/users", user, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (data) {
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  }
+  return data;
+};
+
+export { registerService, logoutService, loginService, updateProfileService };

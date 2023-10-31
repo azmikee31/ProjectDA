@@ -22,7 +22,9 @@ function CastsModal({ modalOpen, setModalOpen, cast }) {
             <Uploder />
             <div className="w-32 h-32 p-2 bg-main border border-border rounded">
               <img
-                src={`/images/${cast ? cast.image : "user.png"}`}
+                src={`/images/${
+                  cast ? cast.image : "user.png, user.jpeg, user.jpg, user.wepp"
+                }`}
                 alt={cast?.fullName}
                 className="w-full h-full object-cover rounded"
               />

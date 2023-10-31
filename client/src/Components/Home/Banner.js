@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Autoplay } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Movies } from '../../Data/MovieData';
-import FlexMovieItems from '../FlexMovieItems';
-import { FaHeart } from 'react-icons/fa';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Autoplay } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Movies } from "../../Data/MovieData";
+import FlexMovieItems from "../FlexMovieItems";
+import { FaHeart } from "react-icons/fa";
 
 function Banner() {
   return (

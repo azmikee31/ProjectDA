@@ -11,7 +11,7 @@ import {
   getUsers,
   deleteUser,
 } from "../Controllers/UserController.js";
-import { protect, admin } from "../middlewares/auth.js";
+import { protect, admin } from "../middlewares/Auth.js";
 
 const router = express.Router();
 
@@ -27,10 +27,8 @@ router.get("/favorites", protect, getLikedMovies);
 router.post("/favorites", protect, addLikedMovies);
 router.delete("/favorites", protect, deleteLikedMovies);
 
-
 // ****** ADMIN ROUTES ******
 router.get("/", protect, admin, getUsers);
 router.delete("/:id", protect, admin, deleteUser);
-
 
 export default router;

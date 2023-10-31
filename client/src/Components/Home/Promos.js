@@ -1,5 +1,5 @@
-import React from 'react';
-import { FiUser } from 'react-icons/fi';
+import React from "react";
+import { FiUser } from "react-icons/fi";
 
 function Promos() {
   return (
@@ -10,11 +10,9 @@ function Promos() {
             Download Your Movies Watch Offline. <br /> Enjoy on Your Mobile
           </h1>
           <p className="text-text text-sm xl:text-base leading-6 xl:leading-8">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries..
+            Online movie viewing site with a new user-friendly layout and
+            design. Movie sources are compiled from large websites with an
+            extremely rich variety of movie titles and genres...
           </p>
           <div className="flex gap-4 md:text-lg text-sm">
             <div className="flex-colo bg-black text-subMain px-6 py-3 rounded font-bold">

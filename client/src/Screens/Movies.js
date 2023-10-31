@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Filters from "../Components/Filters";
 import Layout from "../Layout/Layout";
 import Movie from "../Components/Movie";
@@ -21,7 +21,7 @@ function MoviesPage() {
           items Found
         </p>
         <div className="grid sm:mt-10 mt-6 xl:grid-cols-4 2xl:grid-cols-5 lg:grid-cols-3 sm:grid-cols-2 gap-6">
-          {Movies.slice(0,page)?.map((movie, index) => (
+          {Movies.slice(0, page)?.map((movie, index) => (
             <Movie key={index} movie={movie} />
           ))}
         </div>

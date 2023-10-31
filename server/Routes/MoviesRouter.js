@@ -1,5 +1,5 @@
 import express from "express";
-import { protect, admin } from "../middlewares/auth.js";
+import { protect, admin } from "../middlewares/Auth.js";
 import * as moviesController from "../Controllers/MoviesController.js";
 
 const router = express.Router();

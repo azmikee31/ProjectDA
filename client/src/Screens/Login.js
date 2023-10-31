@@ -36,9 +36,13 @@ function Login() {
   // useEffect
   useEffect(() => {
     if (userInfo?.isAdmin) {
-      navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1000);
     } else if (userInfo) {
-      navigate("/profile");
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1000);
     }
     if (isSuccess) {
       toast.success(`Welcome back ${userInfo?.fullName}`);
@@ -64,7 +68,7 @@ function Login() {
           <div className="w-full">
             <Input
               label="Email"
-              placeholder="netflixo@gmail.com"
+              placeholder="yourmail@gmail.com"
               type="email"
               name="email"
               register={register("email")}
