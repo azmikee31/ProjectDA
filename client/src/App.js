@@ -30,6 +30,7 @@ function App() {
       <ToastContainer />
       <DrawerContext>
         <ScrollOnTop>
+          
           <Routes>
             {/********************* PUBLIC ROUTERS ******************** */}
             <Route path="/" element={<HomeScreen />} />
@@ -46,7 +47,6 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/password" element={<Password />} />
               <Route path="/favorites" element={<FavoritesMovies />} />
-              {/********************* ADMIN ROUTERS ******************** */}
               <Route element={<AdminProtectedRouter />}>
                 <Route path="/movieslist" element={<MoviesList />} />
                 <Route path="/dashboard" element={<Dashboard />} />
@@ -55,6 +55,7 @@ function App() {
                 <Route path="/addmovie" element={<AddMovie />} />
               </Route>
             </Route>
+
           </Routes>
         </ScrollOnTop>
       </DrawerContext>

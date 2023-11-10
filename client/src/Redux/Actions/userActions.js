@@ -4,12 +4,14 @@ import * as userApi from "../APIs/userServices";
 import { ErrorsAction, tokenProtection } from "../Protection";
 import toast from "react-hot-toast";
 
+
 // login actions
 const loginAction = (datas) => async (dispatch) => {
   try {
     dispatch({ type: userConstants.USER_LOGIN_REQUEST });
     const response = await userApi.loginService(datas);
-    dispatch({ type: userConstants.USER_LOGIN_SUCCESS, payload: response });
+    console.log(response);
+    dispatch({ type: userConstants.USER_LOGIN_SUCCESS, payload:response });
   } catch (error) {
     ErrorsAction(error, dispatch, userConstants.USER_LOGIN_FAIL);
   }
@@ -19,7 +21,7 @@ const loginAction = (datas) => async (dispatch) => {
 const registerAction = (datas) => async (dispatch) => {
   try {
     dispatch({ type: userConstants.USER_REGISTER_REQUEST });
-    const response = await userApi.registerService(datas);
+    await userApi.registerService(datas);
     dispatch({ type: userConstants.USER_REGISTER_SUCCESS, payload: {} });
   } catch (error) {
     ErrorsAction(error, dispatch, userConstants.USER_REGISTER_FAIL);

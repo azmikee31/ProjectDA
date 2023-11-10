@@ -18,7 +18,7 @@
     const { isLoading, isError, userInfo, isSuccess } = useSelector(
       (state) => state.userLogin
     );
-
+    // console.log(JSON.parse(userInfo));
     // validate user
     const {
       register,
@@ -33,19 +33,17 @@
       dispatch(loginAction(data));
     };
 
-    // useEffect
     useEffect(() => {
-      if (userInfo?.isAdmin) {
+      if (userInfo?.isAdmin && isSuccess) {
+        toast.success(`Welcome back ${userInfo?.fullName}`);
         setTimeout(() => {
           navigate("/dashboard");
         }, 1000);
-      } else if (userInfo) {
+      } else if (userInfo && isSuccess) {
+        toast.success(`Welcome back ${userInfo?.fullName}`);
         setTimeout(() => {
           navigate("/profile");
         }, 1000);
-      }
-      if (isSuccess) {
-        toast.success(`Welcome back ${userInfo?.fullName}`);
       }
       if (isError) {
         toast.error(isError);
