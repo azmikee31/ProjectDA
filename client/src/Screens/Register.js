@@ -18,6 +18,9 @@ function Register() {
   const { isLoading, isError, isSuccess } = useSelector(
     (state) => state.userRegister
   );
+  const { userInfo } = useSelector(
+    (state) => state.userLogin
+  );
 
   // validate user
   const {
@@ -32,8 +35,9 @@ function Register() {
   const onSubmit = (data) => {
     dispatch(registerAction(data));
   };
+  console.log(userInfo);
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess || userInfo) {
       toast.success(`Wellcome back`);
       setTimeout(() => {
         navigate("/login");
@@ -43,23 +47,7 @@ function Register() {
       toast.error(isError);
       dispatch({ type: "USER_REGISTER_RESET" });
     }
-  }, [isError, isSuccess, dispatch, navigate]);
-  // useEffect
-  // useEffect(() => {
-  //   if (userInfo?.isAdmin) {
-  //     navigate("/dashboard");
-  //   } else if (userInfo) {
-  //     navigate("/profile");
-  //   }
-  //   if (isSuccess) {
-  //     toast.success(`Welcome back ${userInfo?.fullName}`);
-  //   }
-  //   if (isError) {
-  //     toast.error(isError);
-  //     dispatch({ type: "USER_REGISTER_RESET" });
-  //   }
-  // }, [userInfo, isSuccess, isError, navigate, dispatch]);
-
+  }, [isError, isSuccess, dispatch, navigate, userInfo]);
   return (
     <Layout>
       <div className="container mx-auto px-2 my-24 flex-colo">
