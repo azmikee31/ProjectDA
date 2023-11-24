@@ -31,7 +31,7 @@ function App() {
       <DrawerContext>
         <ScrollOnTop>
           
-          <Routes>
+        <Routes>
             {/********************* PUBLIC ROUTERS ******************** */}
             <Route path="/" element={<HomeScreen />} />
             <Route path="/about-us" element={<AboutUs />} />
@@ -47,15 +47,16 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/password" element={<Password />} />
               <Route path="/favorites" element={<FavoritesMovies />} />
+              {/********************* ADMIN ROUTERS ******************** */}
               <Route element={<AdminProtectedRouter />}>
                 <Route path="/movieslist" element={<MoviesList />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/addmovie" element={<AddMovie />} />
+
               </Route>
             </Route>
-
           </Routes>
         </ScrollOnTop>
       </DrawerContext>

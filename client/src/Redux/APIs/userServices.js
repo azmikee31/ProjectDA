@@ -1,5 +1,7 @@
 import Axios from "./Axios";
 
+//------------ PUBLIC APIs ------------
+
 // register new user API call
 const registerService = async (user) => {
   try {
@@ -25,6 +27,8 @@ const loginService = async (user) => {
   return data;
 };
 
+//------------ Private APIs ------------
+
 // update profile call API
 const updateProfileService = async (user, token) => {
   const { data } = await Axios.put("/users", user, {
@@ -38,4 +42,76 @@ const updateProfileService = async (user, token) => {
   return data;
 };
 
-export { registerService, logoutService, loginService, updateProfileService };
+//delete profile API call
+const deleteProfileService = async (token) => {
+  const { data } = await Axios.delete("/users", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (data) {
+    localStorage.removeItem("userInfo");
+  }
+  return data;
+};
+
+// change Password API call
+const changePasswordService = async (Passwords, token) => {
+  const { data } = await Axios.put("/users/password", Passwords, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
+// get all favorite movies
+const getFavoriteMoviesService = async (token) => {
+  const { data } = await Axios.get("/users/favorites", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
+// delete all favorite movies
+const deleteFavoriteMoviesService = async (token) => {
+  const { data } = await Axios.delete("/users/favorites", {
+    headers: {
+      Authorization: `Bearer $(token)`,
+    },
+  });
+  return data;
+};
+
+//------------ ADMIN APIs ------------
+
+// admin get all users
+const getAllUsersService = async (token) => {
+  const { data } = await Axios.get("/users", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data
+};
+// admin delete user
+const deleteUserService = async (id, token) => {
+  const { data } = await Axios.delete(`/users/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data
+};
+export {
+  registerService,
+  logoutService,
+  loginService,
+  updateProfileService,
+  deleteProfileService,
+  changePasswordService,
+  getFavoriteMoviesService,
+  deleteFavoriteMoviesService,
+  getAllUsersService,
+  deleteUserService,
+};
