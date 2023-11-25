@@ -20,7 +20,7 @@ export const createCategoryReducer = (state = {}, action) => {
         case CategoriesConstants.CREATE_CATEGORY_REQUEST:
             return { isLoading: true };
         case CategoriesConstants.CREATE_CATEGORY_SUCCESS:
-            return { isLoading: false, isSuccess: true };
+            return { isLoading: false, isSuccess: true, state: action.payload };
         case CategoriesConstants.CREATE_CATEGORY_FAIL:
             return { isLoading: false, isError: action.payload, };
         case CategoriesConstants.CREATE_CATEGORY_RESET:

@@ -111,9 +111,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route DELETE api/users
 // @access Private
 const deleteUserProfile = asyncHandler(async (req, res) => {
+  const userId = req.params.id
   try {
     // find user in DB
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(userId)
     // if user exists delete user from DB
     if (user) {
       // if user is admin throw error message
@@ -121,9 +122,10 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error("Can't delete admin user");
       }
+      user.remove
       // else delete user from DB
-      await user.remove;
-      res.json({ message: "User delete successfully" });
+      res.json({ message: "User delete successfully", data: user });
+
     }
     // else send error message
     else {
@@ -134,7 +136,6 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-
 // desc Change user password
 // @route PUT /api/users/password
 // @access Private
@@ -246,20 +247,20 @@ const getUsers = asyncHandler(async (req, res) => {
 // @route DELETE /api/users/:id
 // @access Private/Admin\
 const deleteUser = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
   try {
-    const user = await User.findById(req.params.id);
-    //
+    const user = await User.findById(userId);
+
     if (user) {
       if (user.isAdmin) {
         res.status(400);
-        throw new Error("can't delete admin user");
+        throw new Error("Can't delete admin user");
+      } else {
+        const deleteUser = await User.deleteOne({ _id: userId });
+        res.json({ message: "User deleted successfully" });
+        return deleteUser;
       }
-      //else delete user from DB
-      await user.remove;
-      res.json({ message: "User deleted successfully" });
-    }
-    // else send error message
-    else {
+    } else {
       res.status(404);
       throw new Error("User not found");
     }
@@ -267,6 +268,7 @@ const deleteUser = asyncHandler(async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
 export {
   registerUser,
   loginUser,

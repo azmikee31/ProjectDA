@@ -67,10 +67,9 @@ const updateCategory = asyncHandler(async (req, res) => {
 const deleteCategory = asyncHandler(async (req, res) => {
   try {
     // find the movie in DB
-    const category = await Categories.findById(req.params.id);
+    const category = await Categories.deleteOne({ _id: req.params.id });
     // if the movie is found delete it
     if (category) {
-      await category.remove;
       res.json({ message: "Category removed" });
     } else {
       res.status(404).json({ message: "Category not found" });

@@ -146,7 +146,7 @@ export const adminDeleteAllUsersReducer = (state = { users: [] }, action) => {
     case userConstants.DELETE_USERS_REQUEST:
       return { isLoading: true };
     case userConstants.DELETE_USERS_SUCCESS:
-      return { isLoading: false, isSuccess: true };
+      return { isLoading: false, isSuccess: true, state: action.payload };
     case userConstants.DELETE_USERS_FAIL:
       return { isLoading: false, isError: action.payload };
     case userConstants.DELETE_USERS_RESET:
