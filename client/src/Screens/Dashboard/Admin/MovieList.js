@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "../../../Components/Table";
 import { Movies } from "../../../Data/MovieData";
 import SideBar from "../SideBar";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMoviesAction } from "../../../Redux/Actions/moviesActions";
 
 function MoviesList() {
+  const dispatch = useDispatch();
+  const { isLoading, isError, movies, page, pages } = useSelector(
+    (state) => state.getAllMovies
+  );
+  useEffect(() => {
+    dispatch(getAllMoviesAction())
+  }, [dispatch])
   return (
     <SideBar>
       <div className="flex flex-col gap-6">
