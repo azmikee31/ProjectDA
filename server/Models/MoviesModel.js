@@ -31,7 +31,7 @@ const moviesSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    typeImage: {
+    titleImage: {
       type: String,
       required: true,
     },
