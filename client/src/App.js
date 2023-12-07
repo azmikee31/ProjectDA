@@ -22,15 +22,38 @@ import WatchPage from "./Screens/WatchPage";
 import DrawerContext from "./Context/DrawerContext";
 import ToastContainer from "./Components/Notifications/ToastContainer";
 import { AdminProtectedRouter, ProtectedRouter } from "./ProtectedRouter";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoriesAction } from "./Redux/Actions/categoriesActions";
+import { getAllMoviesAction } from "./Redux/Actions/moviesActions";
+import { getFavoriteMoviesAction } from "./Redux/Actions/userActions";
+import { toast } from 'react-toastify'
+
 
 function App() {
   Aos.init();
   const dispatch = useDispatch()
+  const { userInfo } = useSelector((state) => state.userLogin)
+  const { isError, isSuccess } = useSelector((state) => state.userLikeMovie)
+  const { isError: catError } = useSelector((state) => state.categoryGetAll)
+
   useEffect(() => {
     dispatch(getAllCategoriesAction());
-  }, [dispatch])
+    dispatch(getAllMoviesAction({}));
+
+    if (userInfo) {
+      dispatch(getFavoriteMoviesAction())
+    }
+    if (isError || catError) {
+      toast.error("Something went wrong, please try again later")
+      dispatch({ type: "LIKE_MOVIES_RESET" })
+    }
+    if (isSuccess) {
+      dispatch({ type: "LIKE_MOVIES_RESET" })
+    }
+
+  }, [dispatch, userInfo, isError, catError, isSuccess])
+
+
   return (
     <>
       <ToastContainer />
@@ -43,6 +66,7 @@ function App() {
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/movies" element={<MoviesPage />} />
+            <Route path="/movies/:search" element={<MoviesPage />} />
             <Route path="/movie/:id" element={<SingleMovie />} />
             <Route path="/watch/:id" element={<WatchPage />} />
             <Route path="/login" element={<Login />} />

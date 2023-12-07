@@ -51,13 +51,13 @@ const moviesSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    video: {
+      require: true,
+      type: String
+    },
     time: {
       type: Number,
       required: true,
-    },
-    year: {
-      type: String,
-      // require: true
     },
     rate: {
       type: Number,
@@ -73,7 +73,7 @@ const moviesSchema = mongoose.Schema(
     casts: [
       {
         name: { type: String, require: true },
-        image: { type: String, require: true },
+        image: { type: String },
       },
     ],
   },
