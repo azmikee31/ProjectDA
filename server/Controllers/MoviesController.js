@@ -32,7 +32,7 @@ const getMovies = asyncHandler(async (req, res) => {
 
     // load more movies
     const page = Number(req.query.pageNumber) || 1; //
-    const limit = 10;
+    const limit = 3;
     const skip = (page - 1) * limit;
     //find movies by query, skip and limit
 
@@ -132,6 +132,7 @@ const createMovieReview = asyncHandler(async (req, res) => {
         userImage: req.user.image,
         rating: Number(),
         comment,
+        rating
       };
       // push the new review to the reviews array
       movie.reviews.push(review);

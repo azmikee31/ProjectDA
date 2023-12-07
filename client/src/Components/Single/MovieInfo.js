@@ -3,6 +3,7 @@ import { FaPlay, FaShareAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import FlexMovieItems from "../FlexMovieItems";
 import { FiLogIn } from "react-icons/fi";
+import Rating from "../Stars";
 
 function MovieInfo({ movie, setModalOpen }) {
   return (
@@ -16,7 +17,7 @@ function MovieInfo({ movie, setModalOpen }) {
         <div className="container px-3 mx-auto 2xl:px-32 xl:grid grid-cols-3 flex-colo py-10 lg:py-20 gap-8">
           <div className="xl:col-span-1 w-full xl:order-none order-last h-header bg-dry border border-gray-800 rounded-lg overflow-hidden">
             <img
-              src={`/images/movies/${movie?.titleImage}`}
+              src={`/images/movies/${movie?.image}`}
               alt={movie?.name}
               className="w-full h-full object-cover"
             />
@@ -56,12 +57,15 @@ function MovieInfo({ movie, setModalOpen }) {
                 {/* watch button */}
                 <div className="sm:col-span-2 col-span-3 flex justify-end font-medium text-sm">
                   <Link
-                    to={`/watch/${movie?.name}`}
+                    to={`/watch/${movie?._id}`}
                     className="bg-dry py-4 hover:bg-subMain transitions border-2 border-subMain rounded-full flex-rows gap-4 w-full sm:py-3"
                   >
                     <FaPlay className="w-3 h-3" /> Watch
                   </Link>
                 </div>
+              </div>
+              <div className="col-span-2 flex md:mt-0 text-lg mt-2 gap-2 text-star">
+                <Rating value={movie?.rate} />
               </div>
             </div>
             <div className="col-span-2 md:mt-0 mt-2 flex justify-end">

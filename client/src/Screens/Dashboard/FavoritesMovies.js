@@ -10,7 +10,6 @@ import { Empty } from "../../Components/Notifications/Empty";
 
 function FavoritesMovies() {
   const dispatch = useDispatch();
-
   const { isLoading, isError, likedMovies } = useSelector(
     (state) => state.userGetFavoriteMovies
   );
@@ -18,7 +17,6 @@ function FavoritesMovies() {
   const { isLoading: deleteLoading, isError: deleteError, isSuccess } = useSelector(
     (state) => state.userDeleteFavoriteMovies
   );
-
   //delete Movies handler
   const deleteMoviesHandler = () => {
     window.confirm("Are you sure you want to delete all movies?") &&
@@ -39,7 +37,7 @@ function FavoritesMovies() {
         <div className="flex-btn gap-2">
           <h2 className="text-xl font-bold">Favorites Movies</h2>
           {
-            likedMovies?.length > 0 &&
+            likedMovies &&
             <button
               disabled={deleteLoading}
               onClick={deleteMoviesHandler}
@@ -51,7 +49,7 @@ function FavoritesMovies() {
         </div>
         {isLoading ? (
           <Loader />
-        ) : likedMovies.length > 0 ? (
+        ) : likedMovies ? (
           <Table data={likedMovies} admin={false} />
         ) : (
           <Empty message="You have no favorite movies" />

@@ -10,8 +10,10 @@ import Loader from "../Components/Notifications/Loader";
 import { RiMovie2Line } from "react-icons/ri";
 import { getAllMoviesAction } from "../Redux/Actions/moviesActions";
 import { LanguageData, RatesData, TimesData, YearData } from "../Data/FilterData";
+import { useParams } from 'react-router-dom';
 
 function MoviesPage() {
+  const { search } = useParams()
   const dispatch = useDispatch();
   const [category, setCategory] = useState({ title: "All Categories" });
   const [year, setYear] = useState(YearData[0]);
@@ -25,7 +27,6 @@ function MoviesPage() {
   );
   //get all categories
   const { categories } = useSelector((state) => state.categoryGetAll);
-
   // queries
   const queries = useMemo(() => {
     const query = {
@@ -35,9 +36,10 @@ function MoviesPage() {
       rate: rates?.title.replace(/\D/g, ""),
       year: year?.title.replace(/\D/g, ""),
       sameClass: "",
+      search: search ? search : ""
     };
     return query;
-  }, [category, times, language, rates, year])
+  }, [category, times, language, rates, year, search])
 
   //useEffect
   useEffect(() => {
@@ -80,8 +82,9 @@ function MoviesPage() {
     year: year,
     setYear: setYear,
 
-
   }
+
+
   return (
     <Layout >
       <div className="min-height-screen container mx-auto px-2 my-6">
@@ -90,7 +93,9 @@ function MoviesPage() {
           Total <span className="font-bold text-subMain">
             {movies ? movies?.length : 0}
           </span>{" "}
-          items Found
+          items Found{
+            search && ` for"${search}"`
+          }
         </p>
         {
           isLoading ? (
