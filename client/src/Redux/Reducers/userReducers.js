@@ -155,3 +155,19 @@ export const adminDeleteAllUsersReducer = (state = { users: [] }, action) => {
       return state;
   }
 };
+
+//USER LIKE MOVIES
+export const userLikeMoviesReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case userConstants.LIKE_MOVIES_REQUEST:
+      return { isLoading: true };
+    case userConstants.LIKE_MOVIES_SUCCESS:
+      return { isLoading: false, isSuccess: true };
+    case userConstants.LIKE_MOVIES_FAIL:
+      return { isLoading: false, isError: action.payload };
+    case userConstants.LIKE_MOVIES_RESET:
+      return {};
+    default:
+      return state;
+  }
+};

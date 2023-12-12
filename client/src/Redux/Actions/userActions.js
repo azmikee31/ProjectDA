@@ -4,7 +4,6 @@ import * as userApi from "../APIs/userServices";
 import { ErrorsAction, tokenProtection } from "../Protection";
 import toast from "react-hot-toast";
 
-
 // login actions
 const loginAction = (datas) => async (dispatch) => {
   try {
@@ -84,7 +83,7 @@ const changePasswordAction = (passwords) => async (dispatch, getState) => {
       payload: response,
     });
   } catch (error) {
-    ErrorsAction(error, dispatch, userConstants.USER_CHANGE_PASSWORD_FAIL)
+    ErrorsAction(error, dispatch, userConstants.USER_CHANGE_PASSWORD_FAIL);
   }
 };
 
@@ -92,7 +91,9 @@ const changePasswordAction = (passwords) => async (dispatch, getState) => {
 const getFavoriteMoviesAction = () => async (dispatch, getState) => {
   try {
     dispatch({ type: userConstants.GET_FAVORITE_MOVIES_REQUEST });
-    const response = await userApi.getFavoriteMoviesService(tokenProtection(getState));
+    const response = await userApi.getFavoriteMoviesService(
+      tokenProtection(getState)
+    );
     dispatch({
       type: userConstants.GET_FAVORITE_MOVIES_SUCCESS,
       payload: response,
@@ -117,10 +118,12 @@ const deleteFavoriteMoviesAction = () => async (dispatch, getState) => {
 };
 
 // admin get all users action
-const getAllUsesAction = () => async (dispatch, getState) => {
+const getAllUsersAction = () => async (dispatch, getState) => {
   try {
     dispatch({ type: userConstants.GET_ALL_USERS_REQUEST });
-    const response = await userApi.getAllUsersService(tokenProtection(getState));
+    const response = await userApi.getAllUsersService(
+      tokenProtection(getState)
+    );
     dispatch({
       type: userConstants.GET_ALL_USERS_SUCCESS,
       payload: response,
@@ -138,11 +141,31 @@ const deleteUsesAction = (id) => async (dispatch, getState) => {
     dispatch({
       type: userConstants.DELETE_USERS_SUCCESS,
     });
-    toast.success("User Deleted")
+    toast.success("User Deleted");
   } catch (error) {
     ErrorsAction(error, dispatch, userConstants.DELETE_USERS_FAIL);
   }
 };
+
+//user like movies Action
+const LikeMoviesAction = (MovieId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: userConstants.LIKE_MOVIES_REQUEST });
+    const response = await userApi.likeMoviesService(
+      MovieId,
+      tokenProtection(getState)
+    );
+    dispatch({
+      type: userConstants.LIKE_MOVIES_SUCCESS,
+      payload: response,
+    });
+    toast.success("Added to your favorites");
+    dispatch(getFavoriteMoviesAction());
+  } catch (error) {
+    ErrorsAction(error, dispatch, userConstants.LIKE_MOVIES_FAIL);
+  }
+};
+
 export {
   loginAction,
   registerAction,
@@ -152,6 +175,7 @@ export {
   changePasswordAction,
   getFavoriteMoviesAction,
   deleteFavoriteMoviesAction,
-  getAllUsesAction,
+  getAllUsersAction,
   deleteUsesAction,
+  LikeMoviesAction,
 };

@@ -32,7 +32,7 @@ const getMovies = asyncHandler(async (req, res) => {
 
     // load more movies
     const page = Number(req.query.pageNumber) || 1; //
-    const limit = 2;
+    const limit = 3;
     const skip = (page - 1) * limit;
     //find movies by query, skip and limit
 
@@ -43,13 +43,22 @@ const getMovies = asyncHandler(async (req, res) => {
 
     // get total number of movies
     const count = await Movie.countDocuments(query);
-
+    const result = await Movie.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalViews: { $sum: "$view" },
+        },
+      },
+    ]);
+    const totalCountViews = result.length > 0 ? result[0].totalViews : 0;
     // send response
     res.json({
       movies,
       page,
       pages: Math.ceil(count / limit),
       totalMovies: count,
+      totalView: totalCountViews,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -132,6 +141,7 @@ const createMovieReview = asyncHandler(async (req, res) => {
         userImage: req.user.image,
         rating: Number(),
         comment,
+        rating,
       };
       // push the new review to the reviews array
       movie.reviews.push(review);
@@ -263,7 +273,7 @@ const createMovie = asyncHandler(async (req, res) => {
       video,
       casts,
     } = req.body;
-
+    const randomNumber = Math.floor(Math.random() * 99) + 1;
     // create new movie
     const movie = new Movie({
       name,
@@ -278,6 +288,7 @@ const createMovie = asyncHandler(async (req, res) => {
       year,
       video,
       casts,
+      view: randomNumber,
       userId: req.user._id,
     });
 

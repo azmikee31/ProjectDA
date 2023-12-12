@@ -14,6 +14,7 @@ Uploadrouter.post("/", upload.single("file"), async (req, res) => {
   try {
     // get file
     const file = req.file;
+
     // cre new filename
     if (file) {
       const fileName = `${uuidv4()}${path.extname(file.originalname)}`;
