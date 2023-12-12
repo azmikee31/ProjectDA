@@ -53,7 +53,7 @@ const moviesSchema = mongoose.Schema(
     },
     video: {
       require: true,
-      type: String
+      type: String,
     },
     time: {
       type: Number,
@@ -76,6 +76,9 @@ const moviesSchema = mongoose.Schema(
         image: { type: String },
       },
     ],
+    view: {
+      type: Number,
+    },
   },
   {
     timestamps: true,

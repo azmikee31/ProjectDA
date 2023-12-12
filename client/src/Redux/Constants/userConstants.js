@@ -49,4 +49,7 @@ export const LIKE_MOVIES_SUCCESS = "LIKE_MOVIES_SUCCESS";
 export const LIKE_MOVIES_FAIL = "LIKE_MOVIES_FAIL";
 export const LIKE_MOVIES_RESET = "LIKE_MOVIES_RESET";
 
-
+export const ADD_CAST = "ADD_CAST";
+export const EDIT_CAST = "EDIT_CAST";
+export const DELETE_CAST = "DELETE_CAST";
+export const RESET_CAST = "RESET_CAST";

@@ -2,7 +2,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 .loader {
     border: 4px solid white;
     width: 30px;
@@ -314,4 +313,12 @@ transform: translateY(-5px) rotate(-45deg);
 .drawer .drawer-content-wrapper {
 width: 420px;
 }
+}
+
+.card-chart {
+    box-shadow:  7px 8px 15px rgba(0, 0, 0, .6), inset 2px 5px 5px  rgba(0, 0, 0, .4);
+    border-radius: 25px;
+}
+#SvgjsG3455 {
+    color: blue !important;
 }

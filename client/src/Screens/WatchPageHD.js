@@ -8,11 +8,10 @@ import { getMoviesDetailAction } from "../Redux/Actions/moviesActions";
 import Loader from "../Components/Notifications/Loader";
 import { RiMovie2Line } from "react-icons/ri";
 
-function WatchPage() {
+function WatchPageHD() {
   let { id } = useParams();
   const [play, setPlay] = useState(false);
   const dispatch = useDispatch();
-
   const {
     isLoading,
     isError,
@@ -46,14 +45,17 @@ function WatchPage() {
         )}
 
         {/* watch video */}
+        {/* w-full h-full rounded */}
         {play ? (
-          <video controls autoPlay={play} className="w-full h-full rounded">
-            <source
-              src={"" + movie?.video}
-              type="video/mp4"
-              title={movie?.name}
-            />
-          </video>
+          <div data-vjs-player>
+            <video controls autoPlay={play} className=" video-js">
+              <source
+                src={"/images/moviesHD/" + movie?.video}
+                type="video/mp4"
+                title={movie?.name}
+              />
+            </video>
+          </div>
         ) : (
           <div className="w-full h-screen rounded-lg overflow-hidden relative">
             {isLoading ? (
@@ -78,7 +80,11 @@ function WatchPage() {
                   </button>
                 </div>
                 <img
-                  src={movie?.image ? `${movie.image}` : "images/user.png"}
+                  src={
+                    movie?.image
+                      ? `/images/movieshd/${movie.image}`
+                      : "images/user.png"
+                  }
                   alt={movie?.name}
                   className="w-full h-full object-cover rounded-lg"
                 />
@@ -86,14 +92,9 @@ function WatchPage() {
             )}
           </div>
         )}
-        <div className="flex-btn sm:w-auto w-60 gap-5">
-          <button className="bg-subMain hover:text-main transitions text-white rounded px-8 font-medium py-3 text-sm">
-            Full HD
-          </button>
-        </div>
       </div>
     </Layout>
   );
 }
 
-export default WatchPage;
+export default WatchPageHD;

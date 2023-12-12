@@ -19,47 +19,51 @@ import NotFound from "./Screens/NotFound";
 import Register from "./Screens/Register";
 import SingleMovie from "./Screens/SingleMovie";
 import WatchPage from "./Screens/WatchPage";
+import WatchPageHD from "./Screens/WatchPageHD";
 import DrawerContext from "./Context/DrawerContext";
 import ToastContainer from "./Components/Notifications/ToastContainer";
 import { AdminProtectedRouter, ProtectedRouter } from "./ProtectedRouter";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategoriesAction } from "./Redux/Actions/categoriesActions";
-import { getAllMoviesAction } from "./Redux/Actions/moviesActions";
+import {
+  getAllMoviesAction,
+  getMoviesDetailAction,
+} from "./Redux/Actions/moviesActions";
 import { getFavoriteMoviesAction } from "./Redux/Actions/userActions";
-import { toast } from 'react-toastify'
-
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import EditMovie from "./Screens/Dashboard/Admin/EditMovie";
 
 function App() {
   Aos.init();
-  const dispatch = useDispatch()
-  const { userInfo } = useSelector((state) => state.userLogin)
-  const { isError, isSuccess } = useSelector((state) => state.userLikeMovie)
-  const { isError: catError } = useSelector((state) => state.categoryGetAll)
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.userLogin);
+  const { isError, isSuccess } = useSelector((state) => state.userLikeMovie);
+  const { isError: catError } = useSelector((state) => state.categoryGetAll);
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch(getAllCategoriesAction());
     dispatch(getAllMoviesAction({}));
+    dispatch(getMoviesDetailAction(id));
 
     if (userInfo) {
-      dispatch(getFavoriteMoviesAction())
+      dispatch(getFavoriteMoviesAction());
     }
     if (isError || catError) {
-      toast.error("Something went wrong, please try again later")
-      dispatch({ type: "LIKE_MOVIES_RESET" })
+      toast.error("Something went wrong, please try again later");
+      dispatch({ type: "LIKE_MOVIES_RESET" });
     }
     if (isSuccess) {
-      dispatch({ type: "LIKE_MOVIES_RESET" })
+      dispatch({ type: "LIKE_MOVIES_RESET" });
     }
-
-  }, [dispatch, userInfo, isError, catError, isSuccess])
-
+  }, [dispatch, id, userInfo, isError, catError, isSuccess]);
 
   return (
     <>
       <ToastContainer />
       <DrawerContext>
         <ScrollOnTop>
-
           <Routes>
             {/********************* PUBLIC ROUTERS ******************** */}
             <Route path="/" element={<HomeScreen />} />
@@ -72,6 +76,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/watchHD/:id" component={<WatchPageHD />} />
             {/********************* PRIVATE PUBLIC ROUTERS ******************** */}
             <Route element={<ProtectedRouter />}>
               <Route path="/profile" element={<Profile />} />
@@ -84,7 +89,7 @@ function App() {
                 <Route path="/categories" element={<Categories />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/addmovie" element={<AddMovie />} />
-
+                <Route path="/edit/:id" element={<EditMovie />} />
               </Route>
             </Route>
           </Routes>

@@ -1,56 +1,76 @@
 import React, { useEffect, useState } from "react";
 import MainModal from "./MainModal";
 import { Input } from "../UsedInputs";
-import { useDispatch, useSelector } from 'react-redux'
-import { createCategoryAction, updateCategoryAction } from "../../Redux/Actions/categoriesActions";
-import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createCategoryAction,
+  updateCategoryAction,
+} from "../../Redux/Actions/categoriesActions";
+import toast from "react-hot-toast";
 import Spinner from "../Spinner";
 function CategoryModal({ modalOpen, setModalOpen, category }) {
-  const [title, setTitle] = useState("")
-  const dispatch = useDispatch()
-  const { isLoading, isSuccess, isError } = useSelector(state => state.categoryCreate)
-  const { isLoading: upLoading, isSuccess: upSuccess, isError: upError } = useSelector(state => state.categoryCreate)
+  const [title, setTitle] = useState("");
+  const dispatch = useDispatch();
+  const { isLoading, isSuccess, isError } = useSelector(
+    (state) => state.categoryCreate
+  );
+  const {
+    isLoading: upLoading,
+    isSuccess: upSuccess,
+    isError: upError,
+  } = useSelector((state) => state.categoryCreate);
   const submitHandle = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (title) {
       if (category) {
-        dispatch(updateCategoryAction(category?._id, { title: title }))
-        setModalOpen(pre => !pre)
+        dispatch(updateCategoryAction(category?._id, { title: title }));
+        setModalOpen((pre) => !pre);
       } else {
-        dispatch(createCategoryAction({ title: title }))
-        setTitle("")
+        dispatch(createCategoryAction({ title: title }));
+        setTitle("");
       }
     } else {
-      toast.error("Please write  a category name")
+      toast.error("Please write  a category name");
     }
-  }
+  };
 
   useEffect(() => {
     if (upError || isError) {
-      toast.error(upError || isError)
+      toast.error(upError || isError);
       dispatch({
-        type: isError ? "CREATE_CATEGORY_RESET" : "UPDATE_CATEGORY_RESET"
+        type: isError ? "CREATE_CATEGORY_RESET" : "UPDATE_CATEGORY_RESET",
       });
     }
     if (upSuccess || isSuccess) {
-      toast.error(upSuccess || isSuccess)
+      toast.error(upSuccess || isSuccess);
       dispatch({
-        type: isError ? "CREATE_CATEGORY_RESET" : "UPDATE_CATEGORY_RESET"
-      })
+        type: isError ? "CREATE_CATEGORY_RESET" : "UPDATE_CATEGORY_RESET",
+      });
     }
     if (category) {
-      setTitle(category?.title)
+      setTitle(category?.title);
     }
     if (modalOpen === false) {
-      setTitle("")
+      setTitle("");
     }
-
-  }, [upError, isError, upSuccess, isSuccess, dispatch, modalOpen, setTitle, category])
+  }, [
+    upError,
+    isError,
+    upSuccess,
+    isSuccess,
+    dispatch,
+    modalOpen,
+    setTitle,
+    category,
+  ]);
   return (
     <MainModal modalOpen={modalOpen} setModalOpen={setModalOpen}>
       <div className="inline-block sm:w-4/5 border border-border md:w-3/5 lg:w-2/5 w-full align-middle p-10 overflow-y-auto h-full bg-main text-white rounded-2xl">
         <h2 className="text-3xl font-bold">{category ? "Update" : "Create"}</h2>
-        <form onSubmit={submitHandle} className="flex flex-col gap-6 text-left mt-6">
+        <form
+          onSubmit={submitHandle}
+          className="flex flex-col gap-6 text-left mt-6"
+        >
           <Input
             label="Category Name"
             placeholder={category ? category.title : "Actions"}
