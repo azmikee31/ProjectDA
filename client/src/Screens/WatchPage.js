@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMoviesDetailAction } from "../Redux/Actions/moviesActions";
 import Loader from "../Components/Notifications/Loader";
 import { RiMovie2Line } from "react-icons/ri";
+import { LikeMovie } from "../Context/Functionalities";
 
 function WatchPage() {
   let { id } = useParams();
   const [play, setPlay] = useState(false);
   const dispatch = useDispatch();
-
+  const [isLike] = useState(false);
+  const { userInfo } = useSelector((state) => state.userLogin)
   const {
     isLoading,
     isError,
@@ -35,7 +37,10 @@ function WatchPage() {
               <BiArrowBack /> {movie?.name}
             </Link>
             <div className="flex-btn sm:w-auto w-full gap-5">
-              <button className="bg-white hover:text-subMain transitions bg-opacity-30 text-white rounded px-4 py-3 text-sm">
+              <button
+                onClick={() => LikeMovie(movie, dispatch, userInfo)}
+                disabled={isLike || isLoading}
+                className={`bg-white ${isLike ? "text-subMain" : "text-white"} hover:text-subMain transitions bg-opacity-30 text-white rounded px-4 py-3 text-sm`}>
                 <FaHeart />
               </button>
               <button className="bg-subMain flex-rows gap-2 hover:text-main transitions text-white rounded px-8 font-medium py-3 text-sm">
