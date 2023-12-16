@@ -139,7 +139,7 @@ const createMovieReview = asyncHandler(async (req, res) => {
         userName: req.user.fullName,
         userId: req.user._id,
         userImage: req.user.image,
-        rating: Number(),
+        rating: Number(rating),
         comment,
         rating,
       };
@@ -149,7 +149,8 @@ const createMovieReview = asyncHandler(async (req, res) => {
       movie.numberOfReviews = movie.reviews.length;
 
       // caculate the new rate
-      movie.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      movie.rate =
+        movie.reviews.reduce((acc, item) => item.rating + acc, 0) /
         movie.reviews.length;
       // save the movie in DB
       await movie.save();

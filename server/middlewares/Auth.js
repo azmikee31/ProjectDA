@@ -4,7 +4,7 @@ import User from "../Models/UserModels.js";
 // @desc Authenticated user & get token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "99d",
+    expiresIn: "999d",
   });
 };
 
@@ -46,4 +46,11 @@ const admin = (req, res, next) => {
     throw new Error("Not athorized as an admin");
   }
 };
-export { generateToken, protect, admin };
+const requireAuth = (req, res, next) => {
+  if (!req.user) {
+    res.status(401);
+    throw new Error("Unauthorized - User not logged in");
+  }
+  next();
+};
+export { generateToken, protect, admin, requireAuth };

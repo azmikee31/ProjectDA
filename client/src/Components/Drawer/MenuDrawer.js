@@ -5,7 +5,8 @@ import { IoClose } from "react-icons/io5";
 import { BsCollectionPlay } from "react-icons/bs";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { BiPhoneCall } from "react-icons/bi";
-import { FaFacebook, FaMedium, FaTelegram, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaTiktok, FaYoutube } from "react-icons/fa";
+import { MdPayment } from "react-icons/md";
 
 function MenuDrawer({ drawerOpen, toggleDrawer }) {
   const active = "bg-dry text-subMain";
@@ -31,24 +32,29 @@ function MenuDrawer({ drawerOpen, toggleDrawer }) {
       link: "/contact-us",
       icon: BiPhoneCall,
     },
+    {
+      name: "Payment",
+      link: "/payment",
+      icon: MdPayment,
+    },
   ];
 
   const LinkDatas = [
     {
       icon: FaFacebook,
-      link: "https://www.facebook.com/zpunet",
+      link: "https://www.facebook.com/hc.kong.3103",
     },
     {
-      icon: FaMedium,
-      link: "https://medium.com/@irenemmassyy",
+      icon: FaTiktok,
+      link: "https://www.tiktok.com/@_yaemiko03",
     },
-    {
-      icon: FaTelegram,
-      link: "https://t.me/zpunet",
-    },
+    // {
+    //   icon: BiLogoGmail,
+    //   link: "",
+    // },
     {
       icon: FaYoutube,
-      link: "https://www.youtube.com/channel/UCOYwYO-LEsrjqBs6xXSfq1w",
+      link: "https://www.youtube.com/channel/UCOh2CY8cMNMU8WM3Mohm5zQ",
     },
   ];
 

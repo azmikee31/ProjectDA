@@ -48,13 +48,20 @@ function AddMovie() {
 
   // on submit
   const onSubmit = (data) => {
+    // console.log({
+    //   ...data,
+    //   image: imageWithoutTitle,
+    //   titleImage: imageTitle,
+    //   video: videopUrl,
+    //   casts,
+    // });
     dispatch(
       createMovieAction({
         ...data,
         image: imageWithoutTitle,
         titleImage: imageTitle,
         video: videopUrl,
-        cast,
+        casts,
       })
     );
   };
@@ -219,7 +226,7 @@ function AddMovie() {
             {casts?.length > 0 &&
               casts?.map((user) => (
                 <div
-                  key={user.id}
+                  key={user._id}
                   className="p-2 italic text-xs text-text rounded flex-colo bg-main border border-border"
                 >
                   <img
@@ -230,7 +237,7 @@ function AddMovie() {
                   <p>{user.name}</p>
                   <div className="flex-rows mt-2 w-full gap-2">
                     <button
-                      onClick={() => deleteCastHandler(user?.id)}
+                      onClick={() => deleteCastHandler(user?._id)}
                       className="w-6 h-6 flex-colo bg-dry border border-border text-subMain rounded"
                     >
                       <MdDelete />

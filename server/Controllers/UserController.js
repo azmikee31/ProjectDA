@@ -111,10 +111,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route DELETE api/users
 // @access Private
 const deleteUserProfile = asyncHandler(async (req, res) => {
-  const userId = req.params.id
+  const userId = req.params.id;
   try {
     // find user in DB
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
     // if user exists delete user from DB
     if (user) {
       // if user is admin throw error message
@@ -122,10 +122,9 @@ const deleteUserProfile = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error("Can't delete admin user");
       }
-      user.remove
+      user.remove;
       // else delete user from DB
       res.json({ message: "User delete successfully", data: user });
-
     }
     // else send error message
     else {
@@ -182,31 +181,57 @@ const getLikedMovies = asyncHandler(async (req, res) => {
 // @desc Add movie to liked movies
 // @route POST /api/users/favorites
 // @access Private
+// const addLikedMovies = asyncHandler(async (req, res) => {
+//   const { movieId } = req.body;
+//   try {
+//     const user = await User.findById(req.user._id);
+//     //
+//     if (user) {
+//       // check if movie already liked
+//       // if movie already liked send error message
+//       if (user.likedMovies.includes(movieId)) {
+//         res.status(400);
+//         throw new Error("Movie already liked");
+//       }
+//       // else
+//       user.likedMovies.push(movieId);
+//       await user.save();
+//       res.json({ message: "Movie added to liked movies" });
+//     }
+//     // else send error message
+//     else {
+//       res.status(404);
+//       throw new Error("User not found");
+//     }
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// });
+const toggleLikedMovie = async (req, res, movieId) => {
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  const likedIndex = user.likedMovies.indexOf(movieId);
+  if (likedIndex !== -1) {
+    // Movie đã được thích, hãy xóa nó
+    user.likedMovies.splice(likedIndex, 1);
+    res.json({ message: "Movie removed from liked movies" });
+  } else {
+    // Movie chưa được thích, hãy thêm nó
+    user.likedMovies.push(movieId);
+    res.json({ message: "Movie added to liked movies" });
+  }
+
+  await user.save();
+};
+
+// Sử dụng trong hàm xử lý yêu thích
 const addLikedMovies = asyncHandler(async (req, res) => {
   const { movieId } = req.body;
-  try {
-    const user = await User.findById(req.user._id);
-    //
-    if (user) {
-      // check if movie already liked
-      // if movie already liked send error message
-      if (user.likedMovies.includes(movieId)) {
-        res.status(400);
-        throw new Error("Movie already liked");
-      }
-      // else
-      user.likedMovies.push(movieId);
-      await user.save();
-      res.json({ message: "Movie added to liked movies" });
-    }
-    // else send error message
-    else {
-      res.status(404);
-      throw new Error("User not found");
-    }
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+  await toggleLikedMovie(req, res, movieId);
 });
 
 // @desc Delete all liked movies
@@ -219,7 +244,10 @@ const deleteLikedMovies = asyncHandler(async (req, res) => {
     if (user) {
       user.likedMovies = [];
       await user.save();
-      res.json({ message: "All liked movies deleted successfully", data: user.likedMovies });
+      res.json({
+        message: "All liked movies deleted successfully",
+        data: user.likedMovies,
+      });
     }
     // else send error message
     res.status(404);

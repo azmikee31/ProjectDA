@@ -1,4 +1,5 @@
 import * as userConstants from "../Constants/userConstants";
+import * as actionTypes from "../Constants/userConstants";
 
 // LOGIN
 
@@ -75,7 +76,11 @@ export const userChangePasswordReducer = (state = {}, action) => {
     case userConstants.USER_CHANGE_PASSWORD_REQUEST:
       return { isLoading: true };
     case userConstants.USER_CHANGE_PASSWORD_SUCCESS:
-      return { isLoading: false, isSuccess: true, message: action.payload.message };
+      return {
+        isLoading: false,
+        isSuccess: true,
+        message: action.payload.message,
+      };
     case userConstants.USER_CHANGE_PASSWORD_FAIL:
       return { isLoading: false, isError: action.payload };
     case userConstants.USER_CHANGE_PASSWORD_RESET:
@@ -122,7 +127,7 @@ export const usersDeleteFavoriteMoviesReducer = (state = {}, action) => {
   }
 };
 
-//ADMIN GET ALL USERS 
+//ADMIN GET ALL USERS
 export const adminGetAllUsersReducer = (state = { users: [] }, action) => {
   switch (action.type) {
     case userConstants.GET_ALL_USERS_REQUEST:
@@ -171,3 +176,25 @@ export const userLikeMoviesReducer = (state = { users: [] }, action) => {
       return state;
   }
 };
+
+const initialState = {
+  // ... các trạng thái khác
+  showFavoriteToast: false,
+};
+
+const userReducer = (state = initialState, action) => {
+  switch (action.type) {
+    // ... xử lý các hành động khác
+
+    case actionTypes.TOGGLE_FAVORITE_TOAST:
+      return {
+        ...state,
+        showFavoriteToast: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export default userReducer;

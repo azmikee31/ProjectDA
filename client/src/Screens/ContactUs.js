@@ -1,30 +1,30 @@
-import React from 'react';
-import { FiPhoneCall, FiMapPin, FiMail } from 'react-icons/fi';
-import Head from '../Components/Head';
-import Layout from '../Layout/Layout';
+import React from "react";
+import { FiPhoneCall, FiMapPin, FiMail } from "react-icons/fi";
+import Head from "../Components/Head";
+import Layout from "../Layout/Layout";
 
 function ContactUs() {
   const ContactData = [
     {
       id: 1,
-      title: 'Email Us',
-      info: 'Interactively grow backend ideas for cross-platform models.',
+      title: "Email Us",
+      info: "Interactively grow backend ideas for cross-platform models.",
       icon: FiMail,
-      contact: 'info@zpunet.com',
+      contact: "alonecoding.com",
     },
     {
       id: 2,
-      title: 'Call Us',
-      info: 'Distinctively exploit optimal alignments for intuitive bandwidth.',
+      title: "Call Us",
+      info: "Distinctively exploit optimal alignments for intuitive bandwidth.",
       icon: FiPhoneCall,
-      contact: '+255 789 456 123',
+      contact: "+84 328 461 516",
     },
     {
       id: 3,
-      title: 'Location',
-      info: 'Dar es salaam, Tanzania. 345 Kigamboni, Street No. 12,',
+      title: "Location",
+      info: "39 Tran Dinh Tri Street, Hoa Minh, Danang city",
       icon: FiMapPin,
-      contact: '',
+      contact: "",
     },
   ];
   return (
@@ -44,11 +44,22 @@ function ContactUs() {
               <p className="mb-0 text-sm text-text leading-7">
                 <a href={`mailto:${item.contact}`} className="text-blue-600">
                   {item.contact}
-                </a>{' '}
+                </a>{" "}
                 {item.info}
               </p>
             </div>
           ))}
+          {/* <form
+            action="http://localhost:8888/order/create_payment_url"
+            method="post"
+          >
+            <input style={{ color: "black" }} type="number" name="amount" />
+            <input type="hidden" name="language" value="vn" />
+            <input type="hidden" name="bankCode" value="VNBANK" />
+            <button style={{ backgroundColor: "red" }}>
+              Thanh toan online
+            </button>
+          </form> */}
         </div>
       </div>
     </Layout>

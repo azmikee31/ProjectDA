@@ -3,6 +3,7 @@ import * as userApi from "../APIs/userServices";
 // import toast from "react-hot-toast";
 import { ErrorsAction, tokenProtection } from "../Protection";
 import toast from "react-hot-toast";
+import * as actionTypes from "../Constants/userConstants";
 
 // login actions
 const loginAction = (datas) => async (dispatch) => {
@@ -102,6 +103,10 @@ const getFavoriteMoviesAction = () => async (dispatch, getState) => {
     ErrorsAction(error, dispatch, userConstants.GET_FAVORITE_MOVIES_FAIL);
   }
 };
+const toggleFavoriteToast = (isFavorite) => ({
+  type: actionTypes.TOGGLE_FAVORITE_TOAST,
+  payload: isFavorite,
+});
 
 //delete all favorite movies action
 const deleteFavoriteMoviesAction = () => async (dispatch, getState) => {
@@ -148,6 +153,23 @@ const deleteUsesAction = (id) => async (dispatch, getState) => {
 };
 
 //user like movies Action
+// const LikeMoviesAction = (MovieId) => async (dispatch, getState) => {
+//   try {
+//     dispatch({ type: userConstants.LIKE_MOVIES_REQUEST });
+//     const response = await userApi.likeMoviesService(
+//       MovieId,
+//       tokenProtection(getState)
+//     );
+//     dispatch({
+//       type: userConstants.LIKE_MOVIES_SUCCESS,
+//       payload: response,
+//     });
+//     toast.success("Added to your favorites");
+//     dispatch(getFavoriteMoviesAction());
+//   } catch (error) {
+//     ErrorsAction(error, dispatch, userConstants.LIKE_MOVIES_FAIL);
+//   }
+// };
 const LikeMoviesAction = (MovieId) => async (dispatch, getState) => {
   try {
     dispatch({ type: userConstants.LIKE_MOVIES_REQUEST });
@@ -159,8 +181,12 @@ const LikeMoviesAction = (MovieId) => async (dispatch, getState) => {
       type: userConstants.LIKE_MOVIES_SUCCESS,
       payload: response,
     });
-    toast.success("Added to your favorites");
+
+    // Toggle hiển thị toast dựa trên thành công hay không
+    dispatch(toggleFavoriteToast(response.success));
+
     dispatch(getFavoriteMoviesAction());
+    toast.success(response.message);
   } catch (error) {
     ErrorsAction(error, dispatch, userConstants.LIKE_MOVIES_FAIL);
   }
@@ -178,4 +204,5 @@ export {
   getAllUsersAction,
   deleteUsesAction,
   LikeMoviesAction,
+  toggleFavoriteToast,
 };
