@@ -90,7 +90,7 @@ function NavBar() {
             </NavLink>
             <NavLink to="/favorites" className={`${Hover} relative`}>
               <FaHeart className="w-6 h-6" />
-              <div className="w-5 h-5 flex-colo rounded-full text-xs bg-subMain text-white absolute -top-5 -right-1">
+              <div className="w-5 h-5 flex-colo rounded-full text-xs text-red-800 absolute top-2 left-2 font-bold  -right-1">
                 {
                   likedMovies?.length
                 }
