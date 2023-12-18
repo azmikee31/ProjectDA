@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { DateFormat, shortUppercaseId } from "./Notifications/Empty";
-
+import DeleteCategoryModal from "./Modals/DeleteCategoryModal";
 const Head = "text-xs text-left text-main font-semibold px-6 py-2 uppercase";
 const Text = "text-sm text-left leading-6 whitespace-nowrap px-5 py-3";
+// Filter out admin users if users prop is true
 
 // rows
 const Rows = ({ data, users, OnEditFunction, onDeleteFunction }) => {
+  const [open, setOpen] = useState(false);
+  const [categoryId, setCategoryId] = useState(null);
+  const handeOpen = () => {
+    setOpen((pre) => !pre);
+    setCategoryId(data._id);
+  };
   return (
     <tr>
       {/* users */}
@@ -31,8 +38,10 @@ const Rows = ({ data, users, OnEditFunction, onDeleteFunction }) => {
           <td className={`${Text}`}>{data?.isAdmin ? "Admin" : "User"}</td>
           <td className={`${Text} float-right flex-rows gap-2`}>
             {!data?.isAdmin && (
-              <button onClick={() => onDeleteFunction(data?._id)}
-                className="bg-subMain text-white rounded flex-colo w-6 h-6">
+              <button
+                onClick={() => onDeleteFunction(data?._id)}
+                className="bg-subMain text-white rounded flex-colo w-6 h-6"
+              >
                 <MdDelete />
               </button>
             )}
@@ -41,7 +50,9 @@ const Rows = ({ data, users, OnEditFunction, onDeleteFunction }) => {
       ) : (
         // Categories
         <>
-          <td className={`${Text} font-bold`}>{data?._id ? shortUppercaseId(data._id) : "2R75T8"}</td>
+          <td className={`${Text} font-bold`}>
+            {data?._id ? shortUppercaseId(data._id) : "2R75T8"}
+          </td>
           <td className={`${Text}`}>{DateFormat(data?.createAt)}</td>
           <td className={`${Text}`}>{data.title}</td>
           <td className={`${Text} float-right flex-rows gap-2`}>
@@ -51,18 +62,27 @@ const Rows = ({ data, users, OnEditFunction, onDeleteFunction }) => {
             >
               Edit <FaEdit className="text-green-500" />
             </button>
-            <button onClick={() => onDeleteFunction(data?._id)} className="bg-subMain text-white rounded flex-colo w-6 h-6">
+            <button
+              onClick={handeOpen}
+              className="bg-subMain text-white rounded flex-colo w-6 h-6"
+            >
               <MdDelete />
             </button>
           </td>
         </>
       )}
+      <DeleteCategoryModal
+        setModalOpen={setOpen}
+        modalOpen={open}
+        category={categoryId}
+      />
     </tr>
   );
 };
 
 // table
 function Table2({ data, users, OnEditFunction, onDeleteFunction }) {
+  const filteredData = users ? data.filter((user) => !user.isAdmin) : data;
   return (
     <div className="overflow-x-scroll overflow-hidden relative w-full">
       <table className="w-full table-auto border border-border divide-y divide-border">
@@ -109,14 +129,15 @@ function Table2({ data, users, OnEditFunction, onDeleteFunction }) {
           </tr>
         </thead>
         <tbody className="bg-main divide-y divide-gray-800">
-          {data.map((data, i) =>
-            <Rows key={i}
-              data={data}
+          {filteredData.map((userData, i) => (
+            <Rows
+              key={i}
+              data={userData}
               users={users}
               OnEditFunction={OnEditFunction}
               onDeleteFunction={onDeleteFunction}
             />
-          )}
+          ))}
         </tbody>
       </table>
     </div>

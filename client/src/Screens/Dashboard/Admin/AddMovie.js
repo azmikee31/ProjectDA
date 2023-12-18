@@ -44,6 +44,7 @@ function AddMovie() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(MovieValidation),
+    mode: "onSubmit",
   });
 
   // on submit
@@ -84,7 +85,7 @@ function AddMovie() {
         time: 0,
         language: "",
         year: 0,
-        category: "",
+        category_id: "",
         desc: "",
       });
       setImageTitle("");
@@ -194,10 +195,12 @@ function AddMovie() {
           <Select
             label="Movie Category"
             options={categories?.length > 0 ? categories : []}
-            name="category"
-            register={{ ...register("category") }}
+            name="category_id"
+            register={{ ...register("category_id") }}
           />
-          {errors.category && <InlineError text={errors.category.message} />}
+          {errors.category_id && (
+            <InlineError text={errors.category_id.message} />
+          )}
         </div>
         {/* MOVIE VIDEO */}
 

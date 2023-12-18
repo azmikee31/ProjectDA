@@ -84,7 +84,7 @@ function EditMovie() {
       setValue("time", movies?.time);
       setValue("language", movies?.language);
       setValue("year", movies?.year);
-      setValue("category", movies?.category);
+      setValue("category_id", movies?.category_detail?.category_id);
       setValue("desc", movies?.desc);
       setImageWithoutTitle(movies?.image);
       setImageTitle(movies?.titleImage);
@@ -114,7 +114,6 @@ function EditMovie() {
     editError,
     navigate,
   ]);
-  console.log(movies);
   return (
     <SideBar>
       <CastsModal
@@ -171,9 +170,7 @@ function EditMovie() {
                 name="language"
                 register={register("language")}
               />
-              {errors.language && (
-                <InlineError text={errors.language.message} />
-              )}
+              {errors.year && <InlineError text={errors.year.message} />}
             </div>
             <div className="w-full">
               <Input
@@ -226,10 +223,12 @@ function EditMovie() {
             <Select
               label="Movie Category"
               options={categories?.length > 0 ? categories : []}
-              name="category"
-              register={{ ...register("category") }}
+              name="category_id"
+              register={{ ...register("category_id") }}
             />
-            {errors.category && <InlineError text={errors.category.message} />}
+            {errors.category_id && (
+              <InlineError text={errors.category_id.message} />
+            )}
           </div>
           {/* MOVIE VIDEO */}
 

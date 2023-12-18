@@ -8,6 +8,7 @@ import {
 } from "react-icons/ri";
 import { HiViewGridAdd } from "react-icons/hi";
 import { FiSettings } from "react-icons/fi";
+import { MdPayment } from "react-icons/md";
 import Layout from "../../Layout/Layout";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,6 +61,11 @@ function SideBar({ children }) {
           icon: FiSettings,
         },
         {
+          name: "Payment",
+          link: "/payment",
+          icon: MdPayment,
+        },
+        {
           name: "Favorites Movies",
           link: "/favorites",
           icon: FaHeart,
@@ -76,6 +82,11 @@ function SideBar({ children }) {
           name: "Update Profile",
           link: "/profile",
           icon: FiSettings,
+        },
+        {
+          name: "Payment",
+          link: "/payment",
+          icon: MdPayment,
         },
         {
           name: "Favorites Movies",

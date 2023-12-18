@@ -4,32 +4,35 @@ import Table2 from "../../../Components/Table2";
 import SideBar from "../SideBar";
 import CategoryModal from "../../../Components/Modals/CategoryModal";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from 'react-toastify';
-import { deleteCategoryAction, getAllCategoriesAction } from "../../../Redux/Actions/categoriesActions";
+import { toast } from "react-toastify";
+import {
+  deleteCategoryAction,
+  getAllCategoriesAction,
+} from "../../../Redux/Actions/categoriesActions";
 import Loader from "../../../Components/Notifications/Loader";
 import { Empty } from "../../../Components/Notifications/Empty";
 
 function Categories() {
   const [modalOpen, setModalOpen] = useState(false);
   const [category, setCategory] = useState();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // all categories
-  const { categories, isLoading } = useSelector((state) => state.categoryGetAll);
+  const { categories, isLoading } = useSelector(
+    (state) => state.categoryGetAll
+  );
   //delete category
   const { isSuccess, isError } = useSelector((state) => state.categoryDelete);
   const adminDeleteCategory = (id) => {
-    if (window.confirm("Are you want to delete this categories")) {
-      dispatch(deleteCategoryAction(id))
-    }
-  }
+    dispatch(deleteCategoryAction(id));
+  };
   const OnEditFunction = (id) => {
     setCategory(id);
     setModalOpen(!modalOpen);
   };
 
   useEffect(() => {
-    //get all categories 
+    //get all categories
     dispatch(getAllCategoriesAction());
 
     if (isError) {
@@ -80,7 +83,6 @@ function Categories() {
         ) : (
           <Empty message="You have no categories" />
         )}
-
       </div>
     </SideBar>
   );

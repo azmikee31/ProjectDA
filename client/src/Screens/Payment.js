@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Head from "../Components/Head";
+
 import Layout from "./../Layout/Layout";
 import { createPaymentAction } from "../Redux/Actions/paymentAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +14,7 @@ function Payment() {
   );
   const user = useSelector((state) => state.user);
   const [paymentData, setPaymentData] = useState({
-    amount: 50000,
+    amount: 70000,
     date: new Date().toISOString().split("T")[0],
   });
 
@@ -44,7 +44,7 @@ function Payment() {
           method="post"
         >
           <img
-            src="/images/logo.png"
+            src="/images/faugepngrm.png"
             alt="logo"
             className="w-full h-12 object-contain"
           />

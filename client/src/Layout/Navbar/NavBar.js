@@ -25,12 +25,12 @@ function NavBar() {
   return (
     <>
       <div className="bg-main shadow-md sticky top-0 z-20">
-        <div className="container mx-auto py-6 px-2 lg:grid gap-6 grid-cols-7 justify-between items-center">
+        <div className="container mx-auto py-6 px-2 lg:grid gap-10 grid-cols-7 justify-between items-center">
           {/* Logo */}
           <div className="col-span-1 lg:block hidden">
             <Link to="/">
               <img
-                src="/images/logo.png"
+                src="/images/faugepngrm.png"
                 alt="logo"
                 className="w-full h-12 object-contain"
               />
@@ -40,7 +40,7 @@ function NavBar() {
           <div className="col-span-3">
             <form
               onSubmit={handleSearch}
-              className="w-3/4 text-sm bg-dryGray rounded flex-btn gap-4"
+              className="w-full text-sm bg-dryGray rounded flex-btn gap-4"
             >
               <button
                 type="submit"
@@ -62,9 +62,9 @@ function NavBar() {
             <NavLink to="/movies" className={Hover}>
               Movies
             </NavLink>
-            <NavLink to="/payment" className={Hover}>
+            {/* <NavLink to="/payment" className={Hover}>
               Payment
-            </NavLink>
+            </NavLink> */}
             <NavLink to="/about-us" className={Hover}>
               About Us
             </NavLink>
