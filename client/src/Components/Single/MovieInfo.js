@@ -9,8 +9,8 @@ function MovieInfo({ movie, setModalOpen }) {
   return (
     <div className="w-full xl:h-screen relative text-white">
       <img
-        src={`${movie?.image}`}
-        alt={movie.name}
+        src={movie?.image ? `/images/movies/${movie?.image}` : "/images/user.png"}
+        alt={movie?.name}
         className="w-full hidden xl:inline-block h-full object-cover"
       />
       <div className="xl:bg-main bg-dry flex-colo xl:bg-opacity-90 xl:absolute top-0 left-0 right-0 bottom-0">
@@ -64,7 +64,7 @@ function MovieInfo({ movie, setModalOpen }) {
                   </Link>
                 </div>
               </div>
-              <div className="col-span-2 flex md:mt-0 text-lg mt-2 gap-2 text-star">
+              <div className="flex mb-6 text-lg gap-2 text-star">
                 <Rating value={movie?.rate} />
               </div>
             </div>
