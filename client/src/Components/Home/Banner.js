@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,16 +7,13 @@ import { FaHeart } from "react-icons/fa";
 import { RiMovie2Line } from "react-icons/ri";
 import Loader from "../Notifications/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { IfMovieLiked, LikeMovie } from "../../Context/Functionalities";
+import { LikeMovie } from "../../Context/Functionalities";
 
 const Swipper = ({ sameClass, movies }) => {
   const { isLoading } = useSelector((state) => state.userLikeMovie);
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userLogin);
-
-  const isLiked = (movie) => {
-    return IfMovieLiked(movie);
-  };
+  const [isLike] = useState(false);
 
   return (
     <Swiper
@@ -51,10 +48,10 @@ const Swipper = ({ sameClass, movies }) => {
               </Link>
               <button
                 onClick={() => LikeMovie(movie, dispatch, userInfo)}
-                disabled={isLiked || isLoading}
+                disabled={isLike || isLoading}
                 className={`bg-white
-                ${isLiked(movie) ? "text-subMain" : "text-white"}
-                 hover:text-subMain transitions  px-4 py-3 rounded text-sm bg-opacity-30`}
+                  ${isLike ? "text-subMain" : "text-white"}
+                  w-12 h-12 flex-colo transitions hover:bg-subMain rounded-full bg-white bg-opacity-30 text-white`}
               >
                 <FaHeart />
               </button>
