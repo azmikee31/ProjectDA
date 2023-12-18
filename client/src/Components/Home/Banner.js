@@ -77,5 +77,4 @@ function Banner({ movies, isLoading }) {
     </div>
   );
 }
-
 export default Banner;
