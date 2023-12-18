@@ -5,16 +5,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import FlexMovieItems from "../FlexMovieItems";
 import { FaHeart } from "react-icons/fa";
 import { RiMovie2Line } from "react-icons/ri";
-import Loader from '../Notifications/Loader'
+import Loader from "../Notifications/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { LikeMovie } from "../../Context/Functionalities";
 
 const Swipper = ({ sameClass, movies }) => {
-  const { isLoading } = useSelector((state) => state.userLikeMovie)
-  const dispatch = useDispatch()
-  const { userInfo } = useSelector((state) => state.userLogin)
+  const { isLoading } = useSelector((state) => state.userLikeMovie);
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.userLogin);
   const [isLike] = useState(false);
-
 
   return (
     <Swiper
@@ -29,7 +28,7 @@ const Swipper = ({ sameClass, movies }) => {
       {movies.slice(0, 6).map((movie, index) => (
         <SwiperSlide key={index} className="relative rounded overflow-hidden">
           <img
-            src={"/images/movies/" + movie?.image}
+            src={movie?.image}
             alt={movie?.name}
             className="w-full h-full object-cover"
           />
@@ -52,7 +51,8 @@ const Swipper = ({ sameClass, movies }) => {
                 disabled={isLike || isLoading}
                 className={`bg-white
                   ${isLike ? "text-subMain" : "text-white"}
-                  w-12 h-12 flex-colo transitions hover:bg-subMain rounded-full bg-white bg-opacity-30 text-white`}>
+                  w-12 h-12 flex-colo transitions hover:bg-subMain rounded-full bg-white bg-opacity-30 text-white`}
+              >
                 <FaHeart />
               </button>
             </div>
@@ -60,20 +60,29 @@ const Swipper = ({ sameClass, movies }) => {
         </SwiperSlide>
       ))}
     </Swiper>
-  )
-}
+  );
+};
 
 function Banner({ movies, isLoading }) {
-  const sameClass = "w-full flex-col xl:h-96 bg-dry lg:h-64 h-48"
+  const sameClass = "w-full flex-col xl:h-96 bg-dry lg:h-64 h-48";
   return (
     <div className="relative w-full">
-      {isLoading ? (<div className={sameClass}><Loader /></div>) : movies?.length > 0 ? (<Swipper sameClass={sameClass} movies={movies} />) : (<div className={sameClass}>
-        <div className="flex-colo w-24 h-24 p-5 rounded-full bg-dry text-subMain text-4xl">
-          <RiMovie2Line />
+      {isLoading ? (
+        <div className={sameClass}>
+          <Loader />
         </div>
-        <p className="text-border text-sm">It seem's like we don't have any movies</p>
-      </div>)}
-
+      ) : movies?.length > 0 ? (
+        <Swipper sameClass={sameClass} movies={movies} />
+      ) : (
+        <div className={sameClass}>
+          <div className="flex-colo w-24 h-24 p-5 rounded-full bg-dry text-subMain text-4xl">
+            <RiMovie2Line />
+          </div>
+          <p className="text-border text-sm">
+            It seem's like we don't have any movies
+          </p>
+        </div>
+      )}
     </div>
   );
 }

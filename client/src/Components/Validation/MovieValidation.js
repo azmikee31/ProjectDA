@@ -16,7 +16,7 @@ const MovieValidation = yup.object().shape({
   time: yup.string().required("Please enter a movie duration"),
   language: yup.string().required("Please enter a movie language"),
   year: yup.string().required("Please enter year of release"),
-  category: yup.string().required("Please select movie category"),
+  category_id: yup.string().required("Please select movie category"),
   desc: yup
     .string()
     .required("Please enter a movie description")

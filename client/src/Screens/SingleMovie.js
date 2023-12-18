@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MovieCasts from "../Components/Single/MovieCasts";
 import MovieInfo from "../Components/Single/MovieInfo";
@@ -12,9 +12,13 @@ import ShareMovieModal from "../Components/Modals/ShareModal";
 import { getMoviesDetailAction } from "../Redux/Actions/moviesActions";
 import Loader from "../Components/Notifications/Loader";
 import { RiMovie2Line } from "react-icons/ri";
+import { SidebarContext } from "../Context/DrawerContext";
+import { DownloadVideo } from "../Context/Functionalities";
+import { FileSaver } from "file-saver";
 
 function SingleMovie() {
   const [modalOpen, setModalOpen] = useState(false);
+  const { progress, setprogress } = useContext(SidebarContext);
   const { id } = useParams();
   const dispatch = useDispatch();
   const sameClass = "w-full gap-3 flex-col flex items-center min-h-screen";
@@ -24,10 +28,17 @@ function SingleMovie() {
     movies: movie,
   } = useSelector((state) => state.getMoviesDetail);
   const { movies } = useSelector((state) => state.getAllMovies);
+  // related movies
   const RelatedMovies = movies
     ? movies?.filter((m) => m.category === movie?.category)
     : null;
-
+  // download movie video
+  const DownloadMovieVideo = async (videoUrl, name) => {
+    await DownloadVideo(videoUrl, setprogress).then((data) => {
+      setprogress(0);
+      FileSaver.saveAs(data, name);
+    });
+  };
   useEffect(() => {
     dispatch(getMoviesDetailAction(id));
   }, [dispatch, id]);
@@ -51,21 +62,26 @@ function SingleMovie() {
             setModalOpen={setModalOpen}
             movie={movie}
           />
-          <MovieInfo movie={movie} setModalOpen={setModalOpen} />
+          <MovieInfo
+            movie={movie}
+            setModalOpen={setModalOpen}
+            DownloadVideo={DownloadMovieVideo}
+            progress={progress}
+          />
           <div className="container mx-auto min-h-screen px-2 my-6">
             <MovieCasts movie={movie} />
             <MovieRates movie={movie} />
             {RelatedMovies
               ? RelatedMovies.length > 0 && (
-                <div className="my-16">
-                  <Titles title="Related Movies" Icon={BsCollectionFill} />
-                  <div className="grid sm:mt-10 mt-6 xl:grid-cols-4 2xl:grid-cols-5 lg:grid-cols-3 sm:grid-cols-2 gap-6">
-                    {RelatedMovies.map((movie) => (
-                      <Movie key={movie?._id} movie={movie} />
-                    ))}
+                  <div className="my-16">
+                    <Titles title="Related Movies" Icon={BsCollectionFill} />
+                    <div className="grid sm:mt-10 mt-6 xl:grid-cols-4 2xl:grid-cols-5 lg:grid-cols-3 sm:grid-cols-2 gap-6">
+                      {RelatedMovies.map((movie) => (
+                        <Movie key={movie?._id} movie={movie} />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )
+                )
               : ""}
           </div>
         </>

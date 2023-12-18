@@ -53,3 +53,5 @@ export const ADD_CAST = "ADD_CAST";
 export const EDIT_CAST = "EDIT_CAST";
 export const DELETE_CAST = "DELETE_CAST";
 export const RESET_CAST = "RESET_CAST";
+
+export const TOGGLE_FAVORITE_TOAST = "TOGGLE_FAVORITE_TOAST";

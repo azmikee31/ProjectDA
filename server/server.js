@@ -7,12 +7,28 @@ import userRouter from "./Routes/UserRouter.js";
 import moviesRouter from "./Routes/MoviesRouter.js";
 import categoriesRouter from "./Routes/CategoriesRouter.js";
 import Uploadrouter from "./Controllers/UploadFile.js";
+import paymentRouter from "./Routes/paymentRouter.js";
+
+import fs from "fs";
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
+const corsConfigPath = "./cors.json";
+let corsConfig = [];
+
+try {
+  const configFile = fs.readFileSync(corsConfigPath, "utf8");
+  corsConfig = JSON.parse(configFile);
+} catch (error) {
+  console.error("Error reading CORS config file:", error.message);
+}
+app.use(cors(corsConfig));
 app.use(express.json());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  next();
+});
 //connnectDB
 connectDB();
 
@@ -25,6 +41,7 @@ app.use("/api/users", userRouter);
 app.use("/api/movies", moviesRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/upload", Uploadrouter);
+app.use("/api/payment", paymentRouter);
 //error handling middleware
 app.use(errorHandler);
 const PORT = process.env.PORT || 5000;

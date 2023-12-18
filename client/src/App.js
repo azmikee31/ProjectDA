@@ -2,7 +2,7 @@ import Aos from "aos";
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import ScrollOnTop from "./ScrollOnTop";
-import AboutUs from "./Screens/AboutUs";
+// import AboutUs from "./Screens/AboutUs";
 import ContactUs from "./Screens/ContactUs";
 import AddMovie from "./Screens/Dashboard/Admin/AddMovie";
 import Categories from "./Screens/Dashboard/Admin/Categories";
@@ -19,7 +19,7 @@ import NotFound from "./Screens/NotFound";
 import Register from "./Screens/Register";
 import SingleMovie from "./Screens/SingleMovie";
 import WatchPage from "./Screens/WatchPage";
-import WatchPageHD from "./Screens/WatchPageHD";
+
 import DrawerContext from "./Context/DrawerContext";
 import ToastContainer from "./Components/Notifications/ToastContainer";
 import { AdminProtectedRouter, ProtectedRouter } from "./ProtectedRouter";
@@ -30,9 +30,12 @@ import {
   getMoviesDetailAction,
 } from "./Redux/Actions/moviesActions";
 import { getFavoriteMoviesAction } from "./Redux/Actions/userActions";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import EditMovie from "./Screens/Dashboard/Admin/EditMovie";
+
+import AboutUs from "./Screens/AboutUs";
+import Payment from "./Screens/Payment";
 
 function App() {
   Aos.init();
@@ -67,6 +70,7 @@ function App() {
           <Routes>
             {/********************* PUBLIC ROUTERS ******************** */}
             <Route path="/" element={<HomeScreen />} />
+            <Route path="/payment" element={<Payment />} />
             <Route path="/about-us" element={<AboutUs />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/movies" element={<MoviesPage />} />
@@ -76,7 +80,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
-            <Route path="/watchHD/:id" component={<WatchPageHD />} />
+
             {/********************* PRIVATE PUBLIC ROUTERS ******************** */}
             <Route element={<ProtectedRouter />}>
               <Route path="/profile" element={<Profile />} />

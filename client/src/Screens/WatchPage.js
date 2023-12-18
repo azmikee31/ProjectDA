@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Layout from "../Layout/Layout";
 import { BiArrowBack } from "react-icons/bi";
-import { FaCloudDownloadAlt, FaHeart, FaPlay } from "react-icons/fa";
+import { FaCloudDownloadAlt, FaHeart, FaPlay, FaStepBackward, FaStepForward } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getMoviesDetailAction } from "../Redux/Actions/moviesActions";
 import Loader from "../Components/Notifications/Loader";
@@ -11,6 +11,7 @@ import { RiMovie2Line } from "react-icons/ri";
 function WatchPage() {
   let { id } = useParams();
   const [play, setPlay] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
   const dispatch = useDispatch();
 
   const {
@@ -22,6 +23,28 @@ function WatchPage() {
   useEffect(() => {
     dispatch(getMoviesDetailAction(id));
   }, [dispatch, id]);
+
+  
+
+  const handleStepForward = () => {
+    if (movie) {
+      const video = document.getElementById('videoPlayer');
+      if (video) {
+        video.currentTime += 10; // Tua tới 10 giây
+      }
+    }
+  };
+
+  
+
+  const handleStepBackward = () => {
+    if (movie) {
+      const video = document.getElementById('videoPlayer');
+      if (video) {
+        video.currentTime -= 10; // Tua lùi 10 giây
+      }
+    }
+  };
 
   return (
     <Layout>
@@ -47,13 +70,18 @@ function WatchPage() {
 
         {/* watch video */}
         {play ? (
-          <video controls autoPlay={play} className="w-full h-full rounded">
-            <source
-              src={"" + movie?.video}
-              type="video/mp4"
-              title={movie?.name}
-            />
+          <video
+            controls
+            muted
+            autoPlay={play}
+            className="w-full h-full rounded"
+            id="videoPlayer"
+            onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
+          >
+            <source src={movie?.video} type="video/mp4" title={movie?.name} />
+            
           </video>
+          
         ) : (
           <div className="w-full h-screen rounded-lg overflow-hidden relative">
             {isLoading ? (
@@ -84,6 +112,19 @@ function WatchPage() {
                 />
               </>
             )}
+          </div>
+        )}
+        {/* Thêm thanh tua thời gian */}
+        {play && (
+          <div className="flex  justify-center gap-10 items-center">
+            <button onClick={handleStepBackward} className="text-white text-2xl">
+              <FaStepBackward/>
+              
+            </button>
+            
+            <button onClick={handleStepForward} className="text-white text-2xl">
+              <FaStepForward />
+            </button>
           </div>
         )}
         <div className="flex-btn sm:w-auto w-60 gap-5">

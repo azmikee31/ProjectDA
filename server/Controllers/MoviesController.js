@@ -1,6 +1,7 @@
 import { MoviesData } from "../Data/MovieData.js";
 import asyncHandler from "express-async-handler";
 import Movie from "../Models/MoviesModel.js";
+import Category from "../Models/CategoriesModel.js";
 
 // ******** PUBLIC CONTROLLERS ********
 // @desc import movies
@@ -139,7 +140,7 @@ const createMovieReview = asyncHandler(async (req, res) => {
         userName: req.user.fullName,
         userId: req.user._id,
         userImage: req.user.image,
-        rating: Number(),
+        rating: Number(rating),
         comment,
         rating,
       };
@@ -149,7 +150,8 @@ const createMovieReview = asyncHandler(async (req, res) => {
       movie.numberOfReviews = movie.reviews.length;
 
       // caculate the new rate
-      movie.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      movie.rate =
+        movie.reviews.reduce((acc, item) => item.rating + acc, 0) /
         movie.reviews.length;
       // save the movie in DB
       await movie.save();
@@ -180,7 +182,7 @@ const updateMovie = asyncHandler(async (req, res) => {
       titleImage,
       rate,
       numberOfReviews,
-      category,
+      category_id,
       time,
       language,
       year,
@@ -190,7 +192,7 @@ const updateMovie = asyncHandler(async (req, res) => {
 
     // find movie by id in DB
     const movie = await Movie.findById(req.params.id);
-
+    const categories = await Category.findOne({ _id: category_id });
     if (movie) {
       // update movie data
       movie.name = name || movie.name;
@@ -199,7 +201,8 @@ const updateMovie = asyncHandler(async (req, res) => {
       movie.titleImage = titleImage || movie.titleImage;
       movie.rate = rate || movie.rate;
       movie.numberOfReviews = numberOfReviews || movie.numberOfReviews;
-      movie.category = category || movie.category;
+      movie.category = categories.title || movie.category;
+      movie.category_id = categories._id || movie.category_id;
       movie.time = time || movie.time;
       movie.language = language || movie.language;
       movie.year = year || movie.year;
@@ -266,7 +269,7 @@ const createMovie = asyncHandler(async (req, res) => {
       titleImage,
       rate,
       numberOfReviews,
-      category,
+      category_id,
       time,
       language,
       year,
@@ -274,6 +277,7 @@ const createMovie = asyncHandler(async (req, res) => {
       casts,
     } = req.body;
     const randomNumber = Math.floor(Math.random() * 99) + 1;
+    const categories = await Category.findOne({ _id: category_id });
     // create new movie
     const movie = new Movie({
       name,
@@ -282,7 +286,8 @@ const createMovie = asyncHandler(async (req, res) => {
       titleImage,
       rate,
       numberOfReviews,
-      category,
+      category: categories.title,
+      category_id: categories._id,
       time,
       language,
       year,

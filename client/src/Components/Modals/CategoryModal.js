@@ -30,39 +30,9 @@ function CategoryModal({ modalOpen, setModalOpen, category }) {
         setTitle("");
       }
     } else {
-      toast.error("Please write  a category name");
+      toast.error("Please write a category name");
     }
   };
-
-  useEffect(() => {
-    if (upError || isError) {
-      toast.error(upError || isError);
-      dispatch({
-        type: isError ? "CREATE_CATEGORY_RESET" : "UPDATE_CATEGORY_RESET",
-      });
-    }
-    if (upSuccess || isSuccess) {
-      toast.error(upSuccess || isSuccess);
-      dispatch({
-        type: isError ? "CREATE_CATEGORY_RESET" : "UPDATE_CATEGORY_RESET",
-      });
-    }
-    if (category) {
-      setTitle(category?.title);
-    }
-    if (modalOpen === false) {
-      setTitle("");
-    }
-  }, [
-    upError,
-    isError,
-    upSuccess,
-    isSuccess,
-    dispatch,
-    modalOpen,
-    setTitle,
-    category,
-  ]);
   return (
     <MainModal modalOpen={modalOpen} setModalOpen={setModalOpen}>
       <div className="inline-block sm:w-4/5 border border-border md:w-3/5 lg:w-2/5 w-full align-middle p-10 overflow-y-auto h-full bg-main text-white rounded-2xl">

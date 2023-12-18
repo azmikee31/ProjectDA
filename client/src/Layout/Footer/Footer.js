@@ -1,68 +1,68 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const Links = [
     {
-      title: 'Company',
+      title: "Company",
       links: [
         {
-          name: 'Home',
-          link: '/',
+          name: "Home",
+          link: "/",
         },
         {
-          name: 'About Us',
-          link: '/about-us',
+          name: "About Us",
+          link: "/about-us",
         },
         {
-          name: 'Contact Us',
-          link: '/contact-us',
+          name: "Contact Us",
+          link: "/contact-us",
         },
         {
-          name: 'Movies',
-          link: '/movies',
+          name: "Movies",
+          link: "/movies",
         },
       ],
     },
     {
-      title: 'Top Categories',
+      title: "Top Categories",
       links: [
         {
-          name: 'Action',
-          link: '#',
+          name: "Action",
+          link: "#",
         },
         {
-          name: 'Romantic',
-          link: '#',
+          name: "Romantic",
+          link: "#",
         },
         {
-          name: 'Drama',
-          link: '#',
+          name: "Drama",
+          link: "#",
         },
         {
-          name: 'Historical',
-          link: '#',
+          name: "Historical",
+          link: "#",
         },
       ],
     },
     {
-      title: 'My Account',
+      title: "My Account",
       links: [
         {
-          name: 'Dashboard',
-          link: '/dashboard',
+          name: "Dashboard",
+          link: "/dashboard",
         },
         {
-          name: 'My Favorites',
-          link: '/favorite',
+          name: "My Favorites",
+          link: "/favorite",
         },
         {
-          name: 'Profile',
-          link: '/profile',
+          name: "Profile",
+          link: "/profile",
         },
         {
-          name: 'Change Password',
-          link: '/password',
+          name: "Change Password",
+          link: "/password",
         },
       ],
     },
@@ -97,19 +97,19 @@ function Footer() {
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
             <Link to="/">
               <img
-                src="/images/logo.png"
+                src="/images/faugepngrm.png"
                 alt="logo"
                 className="w-2/4 object-contain h-12"
               />
             </Link>
             <p className="leading-7 text-sm text-border mt-3">
               <span>
-                Lorem 196 Andrew Road, Suite 200, <br /> New York, NY 10007
+                39 Tran Dinh Tri Street, <br /> Hoa Minh, Da Nang City
               </span>
               <br />
-              <span>Tell: +255 754 661 423</span>
+              <span>Tell: +84 328 461 516</span>
               <br />
-              <span>Email: info@zpunet.com</span>
+              <span>Email: alonecoding@gmail.com</span>
             </p>
           </div>
         </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MainModal from "./MainModal";
 import { Input } from "../UsedInputs";
 import Uploder from "../Uploder";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -17,7 +17,6 @@ import { Imagepreview } from "../imagepreview";
 function CastsModal({ modalOpen, setModalOpen, cast }) {
   const dispatch = useDispatch();
   const [castImage, setCastImage] = useState("");
-  const generateId = Math.floor(Math.random() * 100000000);
   const image = castImage ? castImage : cast?.image;
 
   // validate cast
@@ -42,7 +41,7 @@ function CastsModal({ modalOpen, setModalOpen, cast }) {
         editCastAction({
           ...data,
           image: image,
-          id: generateId,
+          _id: cast._id,
         })
       );
       toast.success("Cast updated successfully");
@@ -52,7 +51,6 @@ function CastsModal({ modalOpen, setModalOpen, cast }) {
         addCastAction({
           ...data,
           image: image,
-          id: generateId,
         })
       );
       toast.success("Cast created successfully");

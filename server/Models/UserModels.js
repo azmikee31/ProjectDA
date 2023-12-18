@@ -24,6 +24,14 @@ const UserSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isVip: {
+      type: Boolean,
+      default: false,
+    },
+    paymentHistory: {
+      type: Array,
+      ref: "Payment",
+    },
     likedMovies: [
       {
         type: mongoose.Schema.Types.ObjectId,

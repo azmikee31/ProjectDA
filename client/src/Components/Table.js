@@ -21,7 +21,7 @@ const Rows = (movie, i, onDeleteHandler, admin) => {
         </div>
       </td>
       <td className={`${Text} truncate`}>{movie.name}</td>
-      <td className={`${Text}`}>{movie.category}</td>
+      <td className={`${Text}`}>{movie?.category}</td>
       <td className={`${Text}`}>{movie.language}</td>
       <td className={`${Text}`}>{movie.year}</td>
       <td className={`${Text}`}>{movie.time} </td>

@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Categories from "../Models/CategoriesModel.js";
+import MoviesModel from "../Models/MoviesModel.js";
 
 // ******** PUBLIC CONTROLLERS ********
 // @desc get all categories
@@ -65,17 +66,37 @@ const updateCategory = asyncHandler(async (req, res) => {
 // @route DELETE /api/categories/:id
 // @access Private/Admin
 const deleteCategory = asyncHandler(async (req, res) => {
-  try {
-    // find the movie in DB
-    const category = await Categories.deleteOne({ _id: req.params.id });
-    // if the movie is found delete it
-    if (category) {
-      res.json({ message: "Category removed" });
-    } else {
-      res.status(404).json({ message: "Category not found" });
+  const { typeRemove } = req.query;
+  const category_id = req.params.id;
+  if (typeRemove === "1") {
+    // xoá movie liên quan tới category
+    try {
+      await Categories.deleteOne({ _id: category_id });
+      const response = await MoviesModel.deleteMany({
+        category_id: category_id,
+      });
+      res.json({ message: "Delete completed" });
+    } catch (error) {
+      res.json(error);
     }
-  } catch (error) {
-    res.status(400).json({ message: error.message });
+  }
+  if (typeRemove != 1) {
+    try {
+      // find the movie in DB
+      // if the movie is found delete it
+      const category = await Categories.deleteOne({ _id: category_id });
+      const pushCategoryMovie = await MoviesModel.updateMany(
+        { category_id: category_id },
+        { $set: { category: "undefined" } }
+      );
+      if (category || pushCategoryMovie) {
+        res.json({ message: "Category removed", data: pushCategoryMovie });
+      } else {
+        res.status(404).json({ message: "Category not found" });
+      }
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
   }
 });
 

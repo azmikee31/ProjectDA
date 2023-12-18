@@ -22,7 +22,7 @@ export const Select = ({ label, options, register, name }) => {
         name={name}
       >
         {options.map((o, i) => (
-          <option key={i} value={o.value}>
+          <option key={i} value={o._id}>
             {o.title}
           </option>
         ))}
@@ -52,8 +52,9 @@ export const Input = ({
         {...register}
         type={type}
         placeholder={placeholder}
-        className={`w-full text-sm mt-2 p-5 border border-border rounded text-white ${bg ? "bg-main" : "bg-dry"
-          }`}
+        className={`w-full text-sm mt-2 p-5 border border-border rounded text-white ${
+          bg ? "bg-main" : "bg-dry"
+        }`}
       />
     </div>
   );

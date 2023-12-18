@@ -23,6 +23,10 @@ const moviesSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+    category: {
+      type: String,
+    },
+    category_id: { type: String, required: true },
     name: {
       type: String,
       required: true,
@@ -39,10 +43,7 @@ const moviesSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    category: {
-      type: String,
-      required: true,
-    },
+
     language: {
       type: String,
       required: true,
@@ -72,6 +73,7 @@ const moviesSchema = mongoose.Schema(
     reviews: [reviewsSchema],
     casts: [
       {
+        id: { type: Number },
         name: { type: String, require: true },
         image: { type: String },
       },
