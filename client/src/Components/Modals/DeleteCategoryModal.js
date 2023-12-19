@@ -16,11 +16,14 @@ function DeleteCategoryModal({ modalOpen, setModalOpen, category }) {
       <div className="inline-block sm:w-4/5 border border-border md:w-3/5 lg:w-2/5 w-full align-middle p-10 overflow-y-auto h-full bg-main text-white rounded-2xl">
         <h2 className="text-3xl font-bold">Delete Category</h2>
         <div className="flex flex-col gap-3 mt-5">
-          <p>
-            If you want to delete a category that has movies, it will change to
-            an unknown category status
+          <p className="text-red-600">
+            If you delete this category, it means you will also delete movies
+            with that category or return it to an undefined category.
           </p>
-          <CheckBoxType title="I agree" setValueChecked={setValueChecked} />
+          <CheckBoxType
+            title="If you want to switch back to an undefined, click here!!"
+            setValueChecked={setValueChecked}
+          />
         </div>
         <div className="flex gap-5 items-center mt-10 justify-center">
           <button
