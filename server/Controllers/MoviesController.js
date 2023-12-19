@@ -126,30 +126,35 @@ const createMovieReview = asyncHandler(async (req, res) => {
     // find
     const movie = await Movie.findById(req.params.id);
     if (movie) {
-      // check if the user already reviewd
+      // check if the user already reviewed
       const alreadyReviewed = movie.reviews.find(
         (r) => r.userId.toString() === req.user._id.toString()
       );
-      // if the user already reviewd send error 400
+      // if the user already reviewed, send error 400
       if (alreadyReviewed) {
         res.status(400);
         throw new Error("You already reviewed this movie");
       }
-      // else cre new review
+      // else create a new review
+      const numericRating = parseInt(rating, 10); // Convert rating to number
+      if (isNaN(numericRating)) {
+        res.status(400);
+        throw new Error("Invalid rating");
+      }
+
       const review = {
         userName: req.user.fullName,
         userId: req.user._id,
         userImage: req.user.image,
-        rating: Number(rating),
+        rating: numericRating, // Use the numeric rating
         comment,
-        rating,
       };
       // push the new review to the reviews array
       movie.reviews.push(review);
       // increment the number of reviews
       movie.numberOfReviews = movie.reviews.length;
 
-      // caculate the new rate
+      // calculate the new rate
       movie.rate =
         movie.reviews.reduce((acc, item) => item.rating + acc, 0) /
         movie.reviews.length;

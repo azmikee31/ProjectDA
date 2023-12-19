@@ -9,6 +9,8 @@ export const createPaymentReducer = (state = {}, action) => {
       return { isLoading: false, isSuccess: true };
     case paymentConstants.CREATE_PAYMENT_FAIL:
       return { isLoading: false, isError: action.payload };
+    case paymentConstants.CREATE_PAYMENT_RESET:
+      return {};
     default:
       return state;
   }

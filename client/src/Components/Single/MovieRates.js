@@ -8,10 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ReviewValidation } from "../Validation/MovieValidation";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { InlineError } from "../Notifications/Error";
 import { Link } from "react-router-dom";
-import Loader from "../Notifications/Loader";
+
 import { reviewMovieAction } from "../../Redux/Actions/moviesActions";
 
 const Ratings = [
@@ -43,6 +43,7 @@ const Ratings = [
 
 function MovieRates({ movie }) {
   const dispatch = useDispatch();
+
   const { isLoading, isError } = useSelector((state) => state.createReview);
   const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -55,6 +56,7 @@ function MovieRates({ movie }) {
     resolver: yupResolver(ReviewValidation),
   });
   const onSubmit = (data) => {
+    // console.log(data);
     dispatch(
       reviewMovieAction({
         id: movie?._id,
@@ -116,7 +118,7 @@ function MovieRates({ movie }) {
               type="submit"
               className="bg-subMain text-white py-3 w-full flex-colo rounded"
             >
-              {isLoading ? <Loader /> : "Submit"}
+              {isLoading ? "...Loading" : "Submit"}
             </button>
           ) : (
             <Link

@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import * as User from "./Reducers/userReducers";
 import * as Categories from "./Reducers/CategoriesReducers";
 import * as Movies from "./Reducers/MoviesReducers";
+import * as Payment from "./Reducers/PaymentReducers";
 
 const rootReducer = combineReducers({
   // user reducers
@@ -32,6 +33,8 @@ const rootReducer = combineReducers({
   createMovie: Movies.createMovieReducer,
   casts: Movies.CastsReducer,
   updateMovie: Movies.updateMovieReducer,
+  //
+  createPayment: Payment.createPaymentReducer,
 });
 
 // get userInfo from localStorage

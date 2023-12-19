@@ -9,7 +9,7 @@ function MovieInfo({ movie, setModalOpen, DownloadVideo, progress }) {
   return (
     <div className="w-full xl:h-screen relative text-white">
       <img
-        src={movie?.image ? `/images/movies/${movie?.image}` : "/images/user.png"}
+        src={movie?.image ? movie?.image : "/images/user.png"}
         alt={movie?.name}
         className="w-full hidden xl:inline-block h-full object-cover"
       />

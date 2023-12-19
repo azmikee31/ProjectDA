@@ -42,7 +42,7 @@ const PasswordValidation = yup.object().shape({
   oldPassword: yup
     .string()
     .required("Password is required")
-    .min(6, "Password must be at least 6 characters")
+    .min(4, "Password must be at least 4 characters")
     .max(20, "Password must be less than 20 characters ")
     .matches(/(?=.*[0-9])/, "Password must contain a number"),
   newPassword: yup

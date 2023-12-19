@@ -2,16 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Layout from "../Layout/Layout";
 import { BiArrowBack } from "react-icons/bi";
-import { FaCloudDownloadAlt, FaHeart, FaPlay, FaStepBackward, FaStepForward } from "react-icons/fa";
+import {
+  FaCloudDownloadAlt,
+  FaHeart,
+  FaPlay,
+  FaStepBackward,
+  FaStepForward,
+} from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getMoviesDetailAction } from "../Redux/Actions/moviesActions";
 import Loader from "../Components/Notifications/Loader";
 import { RiMovie2Line } from "react-icons/ri";
+import { MdHighQuality } from "react-icons/md";
 
 function WatchPage() {
   let { id } = useParams();
   const [play, setPlay] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+
   const dispatch = useDispatch();
 
   const {
@@ -24,24 +32,20 @@ function WatchPage() {
     dispatch(getMoviesDetailAction(id));
   }, [dispatch, id]);
 
-  
-
   const handleStepForward = () => {
     if (movie) {
-      const video = document.getElementById('videoPlayer');
+      const video = document.getElementById("videoPlayer");
       if (video) {
-        video.currentTime += 10; // Tua tới 10 giây
+        video.currentTime += 10;
       }
     }
   };
 
-  
-
   const handleStepBackward = () => {
     if (movie) {
-      const video = document.getElementById('videoPlayer');
+      const video = document.getElementById("videoPlayer");
       if (video) {
-        video.currentTime -= 10; // Tua lùi 10 giây
+        video.currentTime -= 10;
       }
     }
   };
@@ -79,9 +83,7 @@ function WatchPage() {
             onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
           >
             <source src={movie?.video} type="video/mp4" title={movie?.name} />
-            
           </video>
-          
         ) : (
           <div className="w-full h-screen rounded-lg overflow-hidden relative">
             {isLoading ? (
@@ -114,23 +116,33 @@ function WatchPage() {
             )}
           </div>
         )}
-        {/* Thêm thanh tua thời gian */}
+
         {play && (
-          <div className="flex  justify-center gap-10 items-center">
-            <button onClick={handleStepBackward} className="text-white text-2xl">
-              <FaStepBackward/>
-              
+          <div className="flex  justify-center gap-10 items-center pt-2">
+            <button
+              onClick={handleStepBackward}
+              className="text-white bg-slate-800 hover:bg-slate-700 transitions text-1xl flex px-2 py-1 items-center gap-2 border-1 border-stone-300 rounded "
+            >
+              Rewind video 10s
+              <FaStepBackward />
             </button>
-            
-            <button onClick={handleStepForward} className="text-white text-2xl">
+
+            <button
+              onClick={handleStepForward}
+              className="text-white bg-slate-800 hover:bg-slate-700 transitions text-1xl flex px-2 py-1 items-center gap-2 border-1 border-stone-300 rounded"
+            >
               <FaStepForward />
+              Forward video 10s
             </button>
           </div>
         )}
         <div className="flex-btn sm:w-auto w-60 gap-5">
-          <button className="bg-subMain hover:text-main transitions text-white rounded px-8 font-medium py-3 text-sm">
-            Full HD
-          </button>
+          <Link
+            to="/develop"
+            className="bg-subMain transitions text-white text-lg flex-rows gap-4 font-medium py-3 hover:text-main px-6 rounded-md"
+          >
+            <MdHighQuality /> HD Quality
+          </Link>
         </div>
       </div>
     </Layout>

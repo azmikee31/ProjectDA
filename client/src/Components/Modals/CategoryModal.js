@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MainModal from "./MainModal";
 import { Input } from "../UsedInputs";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,14 +11,8 @@ import Spinner from "../Spinner";
 function CategoryModal({ modalOpen, setModalOpen, category }) {
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
-  const { isLoading, isSuccess, isError } = useSelector(
-    (state) => state.categoryCreate
-  );
-  const {
-    isLoading: upLoading,
-    isSuccess: upSuccess,
-    isError: upError,
-  } = useSelector((state) => state.categoryCreate);
+  const { isLoading } = useSelector((state) => state.categoryCreate);
+  const { isLoading: upLoading } = useSelector((state) => state.categoryCreate);
   const submitHandle = (e) => {
     e.preventDefault();
     if (title) {

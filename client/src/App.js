@@ -36,6 +36,7 @@ import EditMovie from "./Screens/Dashboard/Admin/EditMovie";
 
 import AboutUs from "./Screens/AboutUs";
 import Payment from "./Screens/Payment";
+import Developing from "./Screens/Developing";
 
 function App() {
   Aos.init();
@@ -80,6 +81,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/develop" element={<Developing />} />
 
             {/********************* PRIVATE PUBLIC ROUTERS ******************** */}
             <Route element={<ProtectedRouter />}>

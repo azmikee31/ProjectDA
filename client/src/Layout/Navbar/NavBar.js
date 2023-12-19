@@ -58,13 +58,10 @@ function NavBar() {
             </form>
           </div>
           {/* menus */}
-          <div className="col-span-3 font-medium text-sm hidden xl:gap-11 2xl:gap-24 justify-between lg:flex xl:justify-end items-center whitespace-nowrap">
+          <div className="col-span-3 font-medium text-sm hidden xl:gap-14 2xl:gap-20 justify-between lg:flex xl:justify-end items-center">
             <NavLink to="/movies" className={Hover}>
               Movies
             </NavLink>
-            {/* <NavLink to="/payment" className={Hover}>
-              Payment
-            </NavLink> */}
             <NavLink to="/about-us" className={Hover}>
               About Us
             </NavLink>
@@ -85,7 +82,7 @@ function NavBar() {
                 <img
                   src={userInfo?.image ? userInfo?.image : "/images/user.png"}
                   alt={userInfo?.fullName}
-                  className="w-8 h-8 rounded-full border object-cover border-subMain"
+                  className="w-10 h-10 rounded-full border object-cover border-subMain"
                 />
               ) : (
                 <CgUser className="w-8 h-8" />

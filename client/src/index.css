@@ -322,3 +322,25 @@ width: 420px;
 #SvgjsG3455 {
     color: blue !important;
 }
+
+.lights-control-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .lights-control-button:hover {
+    background-color: #45a049;
+  }
+  body.light-off {
+    background: #000; /* hoặc màu tối khác */
+    color: #fff; /* màu chữ khi đèn tắt */
+  }
+  
+  body.light-on {
+    /* Các style khi đèn bật, để mặc định là màu sáng */
+  }

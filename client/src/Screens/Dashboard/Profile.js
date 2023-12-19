@@ -8,20 +8,27 @@ import { useForm } from "react-hook-form";
 import { ProfileValidation } from "../../Components/Validation/userValidation";
 import { InlineError } from "../../Components/Notifications/Error";
 import { Imagepreview } from "../../Components/imagepreview";
-import { deleteProfileAction, updateProfileAction } from "../../Redux/Actions/userActions";
+import { updateProfileAction } from "../../Redux/Actions/userActions";
 import toast from "react-hot-toast";
+import { createPaymentAction } from "../../Redux/Actions/paymentAction";
+import { useNavigate } from "react-router-dom";
+import { FaCrown } from "react-icons/fa";
 
 function Profile() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { userInfo } = useSelector((state) => state.userLogin);
   const [imageUrl, setImageUrl] = useState(userInfo ? userInfo.image : "");
   const { isLoading, isError, isSuccess } = useSelector(
     (state) => state.userUpdateProfile
   );
 
-  const { isLoading: deleteLoading, isError: deleteError, } = useSelector(
-    (state) => state.userDeleteProfile
-  );
+  const {
+    isLoading: payLoading,
+    isError: payError,
+    isSuccess: paySuccess,
+  } = useSelector((state) => state.createPayment || {});
   // validate user
   const {
     register,
@@ -37,11 +44,15 @@ function Profile() {
     dispatch(updateProfileAction({ ...data, image: imageUrl }));
   };
 
-  //delete Profile 
-  const deleteProfile = () => {
-    window.confirm("Are you sure you want to delete your profile? ") &&
-      dispatch(deleteProfileAction());
-  }
+  const updatePremium = () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to update Premium?"
+    );
+    if (confirmed) {
+      dispatch(createPaymentAction());
+      navigate("/payment"); // Chuyển hướng qua trang payment
+    }
+  };
 
   // useEffect
   useEffect(() => {
@@ -49,15 +60,16 @@ function Profile() {
       setValue("fullName", userInfo?.fullName);
       setValue("email", userInfo?.email);
     }
-    if (isSuccess) {
+    if (isSuccess || paySuccess) {
+      dispatch({ type: "CREATE_PAYMENT_SUCCESS" });
       dispatch({ type: "USER_UPDATE_PROFILE_RESET" });
     }
-    if (isError || deleteError) {
-      toast.error(isError || deleteError);
+    if (isError || payError) {
+      toast.error(isError || payError);
       dispatch({ type: "USER_UPDATE_PROFILE_RESET" });
-      dispatch({ type: "USER_DELETE_PROFILE_RESET" });
+      dispatch({ type: "CREATE_PAYMENT_RESET" });
     }
-  }, [userInfo, setValue, isSuccess, isError, dispatch, deleteError]);
+  }, [userInfo, setValue, isSuccess, isError, dispatch, payError, paySuccess]);
   return (
     <SideBar>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
@@ -98,14 +110,15 @@ function Profile() {
         </div>
         <div className="flex gap-2 flex-wrap flex-col-reverse sm:flex-row justify-between items-center my-4">
           <button
-            onClick={deleteProfile}
-            disabled={deleteLoading || isLoading}
-            className="bg-subMain font-medium transitions hover:bg-main border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto">
-
-            {deleteLoading ? "Deleting..." : " Delete Account"}
+            onClick={updatePremium}
+            disabled={payLoading || isLoading}
+            className=" bg-subMain font-medium flex items-center gap-2 transitions hover:bg-main border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto"
+          >
+            <FaCrown />
+            {payLoading ? "loading..." : " Premium"}
           </button>
           <button
-            disabled={deleteLoading || isLoading}
+            disabled={payLoading || isLoading}
             type="submit"
             className="bg-main font-medium transitions hover:bg-subMain border border-subMain text-white py-3 px-6 rounded w-full sm:w-auto"
           >
